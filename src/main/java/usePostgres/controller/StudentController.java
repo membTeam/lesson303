@@ -24,9 +24,17 @@ public class StudentController {
         return studentServ.add(item);
     }
 
-    @GetMapping("info")
-    public String info() {
-        return "info ok";
+    @DeleteMapping("delete/{id}")
+    public Student delete(@PathVariable Long id) {
+        return studentServ.delete(id);
     }
+
+
+    @PutMapping("update")
+    public Student delete(@RequestBody Student item) {
+        return studentServ.update(item);
+    }
+
+
 
 }

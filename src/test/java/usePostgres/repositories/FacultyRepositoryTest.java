@@ -35,12 +35,26 @@ public class FacultyRepositoryTest {
         assertTrue( res);
     }
 
-
     @Test
     public void getMaxIDForFaculty() {
         var res = facultyRepository.getMaxID();
 
         assertTrue(res > 0);
+    }
+
+    @Test
+    public void existDataForFaculty() {
+        var res = studentRepository.existDataForFaculty(2L);
+
+        assertTrue(res);
+    }
+
+    @Test
+
+    public void existStudent() {
+        var res = facultyRepository.existStudent(1L);
+
+        assertTrue(res);
     }
 
 }

@@ -1,5 +1,6 @@
 package usePostgres.models;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -15,7 +16,8 @@ import lombok.NoArgsConstructor;
 public class Student {
     @Id
     private Long id;
-    private String faculty;
+    @Column(name = "faculty_id")
+    private Long facultyId;
     private String name;
     private  int age;
 }

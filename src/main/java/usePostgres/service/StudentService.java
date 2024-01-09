@@ -2,6 +2,7 @@ package usePostgres.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import usePostgres.exception.ErrBadRequestException;
 import usePostgres.models.Student;
 import usePostgres.repositories.FacultyRepository;
 import usePostgres.repositories.StudentRepository;
@@ -12,11 +13,9 @@ import static usePostgres.exception.RunErrBadRequestException.runException;
 public class StudentService {
 
     private StudentRepository studentRepo;
-    private FacultyRepository facultyRepo;
 
     public StudentService(StudentRepository studentRepo, FacultyRepository facultyRepo) {
         this.studentRepo = studentRepo;
-        this.facultyRepo = facultyRepo;
     }
 
     private boolean isExists(Student item) {
@@ -35,10 +34,7 @@ public class StudentService {
             strErr = strErr.isBlank() ? s : " " + s;
         }
 
-        if (item.getFaculty() == null
-                || item.getFaculty().isBlank()
-                || !facultyRepo.existDataForName(item.getFaculty())  ) {
-
+        if (!studentRepo.existDataForFaculty(item.getFacultyId() )) {
             var s = "Нет данных по факультету";
             strErr = strErr.isBlank() ? s : " " + s;
         }
@@ -75,7 +71,11 @@ public class StudentService {
     }
 
     public Student update(Student item) {
-        if (!studentRepo.existDataForName(item.getName()) ) {
+        /*if (!studentRepo.existDataForName(item.getName()) ) {
+            runException("Нет данных");
+        }*/
+
+        if (item.getId() == null || item.getId() == 0 ) {
             runException("Нет данных");
         }
 
@@ -90,7 +90,7 @@ public class StudentService {
         }
 
         studentRepo.deleteById(id);
-        return item.orElseThrow();
+        return item.orElseThrow(()-> {throw new ErrBadRequestException("Нет данных по идентификатору");});
     }
 
 }
