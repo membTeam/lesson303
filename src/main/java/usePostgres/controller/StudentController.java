@@ -35,6 +35,9 @@ public class StudentController {
         return studentServ.update(item);
     }
 
-
+    @GetMapping("age/{age}")
+    public Iterable<Student> age(@PathVariable Integer age) {
+        return studentServ.age(age);
+    }
 
 }

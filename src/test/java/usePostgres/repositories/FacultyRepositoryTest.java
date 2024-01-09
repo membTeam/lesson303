@@ -50,7 +50,13 @@ public class FacultyRepositoryTest {
     }
 
     @Test
+    public void findByAge() {
+        var res = studentRepository.findByAge(18);
 
+        assertTrue(res.size() > 0);
+    }
+
+    @Test
     public void existStudent() {
         var res = facultyRepository.existStudent(1L);
 

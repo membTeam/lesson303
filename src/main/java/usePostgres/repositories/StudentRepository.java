@@ -5,8 +5,10 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import usePostgres.models.Student;
 
+import java.util.List;
+
 public interface StudentRepository extends JpaRepository<Student, Long> {
-    Iterable<Student> findByAge(int age);
+    List<Student> findByAge(int age);
 
     @Query(value="SELECT exists(Select * from faculty where id = :id) res;",
             nativeQuery = true )

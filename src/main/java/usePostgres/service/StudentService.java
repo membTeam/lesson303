@@ -18,10 +18,6 @@ public class StudentService {
         this.studentRepo = studentRepo;
     }
 
-    private boolean isExists(Student item) {
-        return studentRepo.existDataForName(item.getName());
-    }
-
     private void checkData(Student item) {
         String strErr = "";
 
@@ -52,7 +48,7 @@ public class StudentService {
 
         checkData(item);
 
-        if (isExists(item)) {
+        if (studentRepo.existDataForName(item.getName())) {
             runException("Повторный ввод данных");
         }
 
@@ -71,9 +67,6 @@ public class StudentService {
     }
 
     public Student update(Student item) {
-        /*if (!studentRepo.existDataForName(item.getName()) ) {
-            runException("Нет данных");
-        }*/
 
         if (item.getId() == null || item.getId() == 0 ) {
             runException("Нет данных");
