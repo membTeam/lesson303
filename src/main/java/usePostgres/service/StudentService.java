@@ -7,15 +7,20 @@ import usePostgres.models.Student;
 import usePostgres.repositories.FacultyRepository;
 import usePostgres.repositories.StudentRepository;
 
+import java.util.List;
+
 import static usePostgres.exception.RunErrBadRequestException.runException;
 
 @Service
 public class StudentService {
 
     private StudentRepository studentRepo;
+    private final FacultyRepository facultyRepository;
 
-    public StudentService(StudentRepository studentRepo, FacultyRepository facultyRepo) {
+    public StudentService(StudentRepository studentRepo, FacultyRepository facultyRepo,
+                          FacultyRepository facultyRepository) {
         this.studentRepo = studentRepo;
+        this.facultyRepository = facultyRepository;
     }
 
     private void checkData(Student item) {
@@ -30,7 +35,7 @@ public class StudentService {
             strErr = strErr.isBlank() ? s : " " + s;
         }
 
-        if (!studentRepo.existDataForFaculty(item.getFacultyId() )) {
+        if (!studentRepo.existDataForFaculty(item.getFacultyId())) {
             var s = "Нет данных по факультету";
             strErr = strErr.isBlank() ? s : " " + s;
         }
@@ -38,6 +43,10 @@ public class StudentService {
         if (!strErr.isBlank()) {
             runException(strErr);
         }
+    }
+
+    public List<Student> allStudentInFaculty(String faculty) {
+        return studentRepo.findStudentForFaculty(faculty);
     }
 
     public Iterable<Student> age(Integer age) {
@@ -63,7 +72,13 @@ public class StudentService {
             runException("Нет данных по id " + id);
         }
 
-        return studentRepo.findById(id).orElseThrow();
+        var res = studentRepo.findById(id).orElseThrow();
+        String facultyName = facultyRepository
+                .findById(res.getFacultyId())
+                .orElseThrow().getName();
+        res.setFacultyName(facultyName);
+
+        return res;
     }
 
     public Student update(Student item) {

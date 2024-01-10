@@ -4,6 +4,10 @@ import org.springframework.web.bind.annotation.*;
 import usePostgres.models.Student;
 import usePostgres.service.StudentService;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
 @RestController
 @RequestMapping("student")
 public class StudentController {
@@ -12,6 +16,11 @@ public class StudentController {
 
     public StudentController(StudentService studentServ) {
         this.studentServ = studentServ;
+    }
+
+    @GetMapping("all/{faculty}")
+    public List<Student> allStudentInFaculty(@PathVariable String faculty) {
+        return studentServ.allStudentInFaculty(faculty);
     }
 
     @GetMapping("read/{id}")
