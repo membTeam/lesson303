@@ -72,6 +72,9 @@ public class FacultyService {
             runException("Нет данных");
         }
 
+        if (facultyRepo.existStudent(id)) {
+            runException("Отклонение операции. Запись используется");
+        }
         facultyRepo.deleteById(id);
         return item.orElseThrow(()-> {throw new ErrBadRequestException("Нет данных по идентификатору");});
     }
