@@ -4,10 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import usePostgres.exception.ErrBadRequestException;
 import usePostgres.models.Student;
+import usePostgres.repositories.DataStudent;
 import usePostgres.repositories.FacultyRepository;
+import usePostgres.repositories.RecDataStudent;
 import usePostgres.repositories.StudentRepository;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static usePostgres.exception.RunErrBadRequestException.runException;
 
@@ -45,6 +48,18 @@ public class StudentService {
         }
     }
 
+    public List<Student> studentsAgeBetween(Integer start, Integer end) {
+        return studentRepo.findByAgeBetween(start, end);
+    }
+
+    public List<RecDataStudent> allStudentInFacultyExt(Long id) {
+        List<DataStudent> data = studentRepo.findStudentForFacultyExt(id);
+
+        return data.stream().map(obj-> new RecDataStudent(
+                obj.getId(), obj.getFacultyName(), obj.getName(), obj.getAge() )
+        ).collect(Collectors.toList());
+    }
+
     public List<Student> allStudentInFaculty(String faculty) {
         return studentRepo.findStudentForFaculty(faculty);
     }
@@ -76,7 +91,8 @@ public class StudentService {
         String facultyName = facultyRepository
                 .findById(res.getFacultyId())
                 .orElseThrow().getName();
-        res.setFacultyName(facultyName);
+
+        //res.setFacultyName(facultyName);
 
         return res;
     }

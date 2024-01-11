@@ -2,6 +2,8 @@ package usePostgres.controller;
 
 import org.springframework.web.bind.annotation.*;
 import usePostgres.models.Student;
+import usePostgres.repositories.DataStudent;
+import usePostgres.repositories.RecDataStudent;
 import usePostgres.service.StudentService;
 
 import java.util.ArrayList;
@@ -16,6 +18,16 @@ public class StudentController {
 
     public StudentController(StudentService studentServ) {
         this.studentServ = studentServ;
+    }
+
+    @GetMapping("age/{start}/{end}")
+    public List<Student> studentsAgeBetween(@PathVariable Integer start, @PathVariable Integer end) {
+        return studentServ.studentsAgeBetween(start, end);
+    }
+
+    @GetMapping("all/ext/{id}")
+    public List<RecDataStudent> allStudentInFaculty(@PathVariable Long id) {
+        return studentServ.allStudentInFacultyExt(id);
     }
 
     @GetMapping("all/{faculty}")

@@ -25,7 +25,7 @@ public class Student {
     private String name;
     private  int age;
 
-    @Transient
-    private String facultyName;
+   /* @Transient
+    private String facultyName;*/
 
 }

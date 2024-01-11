@@ -24,9 +24,4 @@ public class Faculty {
     private String name;
     private String color;
 
-    /*public static List<Student> getListStudent(@Autowired StudentRepository studentRepository,
-                                               Faculty item) {
-        return null;
-    }*/
-
 }

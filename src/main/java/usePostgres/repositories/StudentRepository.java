@@ -18,9 +18,6 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
     nativeQuery = true)
     List<DataStudent> findStudentForFacultyExt(Long id);
 
-    /*@Query(value = "select st.id, fc.name as facultyName, st.name, st.age FROM Student st left join Faculty fc on st.facultyId = fc.id where st.facultyId = :id")
-    List<DataStudent> findStudentForFacultyExt(Long id);*/
-
     @Query(value = "select * from student where faculty_id = (select id from faculty where name = :faculty limit 1)",
     nativeQuery = true)
     List<Student> findStudentForFaculty(String faculty);
