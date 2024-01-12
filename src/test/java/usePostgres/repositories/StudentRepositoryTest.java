@@ -4,9 +4,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import usePostgres.models.Student;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -18,6 +16,13 @@ public class StudentRepositoryTest {
 
     @Autowired
     private FacultyRepository facultyRepository;
+
+    @Test
+    public void findStudentsForFaculty() {
+        var res = studentRepo.findStudentsByFacultyId(1L);
+
+        assertTrue(res.size()>0);
+    }
 
     @Test
     public void findByAgeBetween() {
@@ -34,13 +39,14 @@ public class StudentRepositoryTest {
         assertTrue(res.size()>0);
     }
 
-    @Test
+    // TODO: Надо разобраться с методом из репозитория
+    /*@Test
     public void findStudentsByIdFaculty() {
         var res = studentRepo.findStudentsForIdFaculty(1L);
 
         assertNotNull(res);
         assertTrue(res.size()>0);
-    }
+    }*/
 
     @Test
     public void findStudentForFacultyExt() {

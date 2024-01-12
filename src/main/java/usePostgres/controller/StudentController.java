@@ -2,12 +2,10 @@ package usePostgres.controller;
 
 import org.springframework.web.bind.annotation.*;
 import usePostgres.models.Student;
-import usePostgres.repositories.DataStudent;
 import usePostgres.repositories.RecDataStudent;
+import usePostgres.repositories.RecRequestStudent;
 import usePostgres.service.StudentService;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 @RestController
@@ -41,7 +39,7 @@ public class StudentController {
     }
 
     @PostMapping("add")
-    public Student add(@RequestBody Student item) {
+    public Student add(@RequestBody RecRequestStudent item) {
         return studentServ.add(item);
     }
 
@@ -52,7 +50,7 @@ public class StudentController {
 
 
     @PutMapping("update")
-    public Student delete(@RequestBody Student item) {
+    public Student delete(@RequestBody RecRequestStudent item) {
         return studentServ.update(item);
     }
 

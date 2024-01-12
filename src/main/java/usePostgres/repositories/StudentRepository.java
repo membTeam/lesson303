@@ -2,7 +2,6 @@ package usePostgres.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import usePostgres.models.Faculty;
 import usePostgres.models.Student;
 
 import java.util.List;
@@ -10,16 +9,16 @@ import java.util.List;
 
 public interface StudentRepository extends JpaRepository<Student, Long> {
 
-    @Query(value = "FROM Student WHERE facultyId = :id" )
-    List<Student> findStudentsForIdFaculty(Long id);
+    @Query(value = "Select fc.students from Faculty fc join fc.students " +
+            "where fc.id = :id")
+    List<Student> findStudentsByFacultyId(Long id);
 
     @Query(value = "select st.id, fc.name as facultyName, st.name, st.age FROM " +
             "student st, faculty fc where st.faculty_id = fc.id and st.faculty_id = :id",
     nativeQuery = true)
     List<DataStudent> findStudentForFacultyExt(Long id);
 
-    @Query(value = "select * from student where faculty_id = (select id from faculty where name = :faculty limit 1)",
-    nativeQuery = true)
+    @Query(value = "FROM Student where faculty.name = :faculty"  )
     List<Student> findStudentForFaculty(String faculty);
 
     List<Student> findByAgeBetween(int start, int end);
@@ -37,7 +36,5 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
     @Query(value="select COALESCE(max(id), 0) res from Student",
             nativeQuery = true )
     Long getMaxID();
-
-
 
 }
