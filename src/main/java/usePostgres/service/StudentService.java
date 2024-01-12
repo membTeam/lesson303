@@ -55,9 +55,12 @@ public class StudentService {
     public List<RecDataStudent> allStudentInFacultyExt(Long id) {
         List<DataStudent> data = studentRepo.findStudentForFacultyExt(id);
 
-        return data.stream().map(obj-> new RecDataStudent(
+        return data.stream().map(obj-> new RecDataStudent(obj))
+                .collect(Collectors.toList());
+
+        /*return data.stream().map(obj-> new RecDataStudent(
                 obj.getId(), obj.getFacultyName(), obj.getName(), obj.getAge() )
-        ).collect(Collectors.toList());
+        ).collect(Collectors.toList());*/
     }
 
     public List<Student> allStudentInFaculty(String faculty) {
