@@ -57,10 +57,6 @@ public class StudentService {
 
         return data.stream().map(obj-> new RecDataStudent(obj))
                 .collect(Collectors.toList());
-
-        /*return data.stream().map(obj-> new RecDataStudent(
-                obj.getId(), obj.getFacultyName(), obj.getName(), obj.getAge() )
-        ).collect(Collectors.toList());*/
     }
 
     public List<Student> allStudentInFaculty(String faculty) {
