@@ -1,7 +1,7 @@
 package usePostgres.repositories;
 
 public interface DataStudent {
-    long getId();
+    Long getId();
     String getFacultyName();
     String getName();
     int getAge();

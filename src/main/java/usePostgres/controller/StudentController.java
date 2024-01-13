@@ -25,7 +25,7 @@ public class StudentController {
 
     @GetMapping("all/ext/{id}")
     public List<RecDataStudent> allStudentInFaculty(@PathVariable Long id) {
-        return studentServ.allStudentInFacultyExt(id);
+        return studentServ.allStudentInFaculty(id);
     }
 
     @GetMapping("all/{faculty}")

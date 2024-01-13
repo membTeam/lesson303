@@ -3,7 +3,6 @@ package usePostgres.service;
 import org.springframework.stereotype.Service;
 import usePostgres.exception.ErrBadRequestException;
 import usePostgres.models.Faculty;
-import usePostgres.models.Student;
 import usePostgres.repositories.FacultyRepository;
 
 import static usePostgres.exception.RunErrBadRequestException.runException;
@@ -38,7 +37,7 @@ public class FacultyService {
 
         checkData(item);
 
-        if (facultyRepo.existDataForName(item.getName())) {
+        if (facultyRepo.existDataForFacultyName(item.getName())) {
             runException("Повторный ввод данных");
         }
 
@@ -72,7 +71,7 @@ public class FacultyService {
             runException("Нет данных");
         }
 
-        if (facultyRepo.existStudent(id)) {
+        if (facultyRepo.existDataForStudentId(id)) {
             runException("Отклонение операции. Запись используется");
         }
         facultyRepo.deleteById(id);

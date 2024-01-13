@@ -19,7 +19,7 @@ public class StudentRepositoryTest {
 
     @Test
     public void findStudentsForFaculty() {
-        var res = studentRepo.findStudentsByFacultyId(1L);
+        var res = studentRepo.findStudentInFaculty(1L);
 
         assertTrue(res.size()>0);
     }
@@ -34,32 +34,22 @@ public class StudentRepositoryTest {
     @Test
     public void findByStudentForFaculty() {
         var faculty = "Gryffindor";
-        var res = studentRepo.findStudentForFaculty(faculty);
+        var res = studentRepo.findStudentInFaculty(faculty);
 
         assertTrue(res.size()>0);
     }
 
-    // TODO: Надо разобраться с методом из репозитория
-    /*@Test
-    public void findStudentsByIdFaculty() {
-        var res = studentRepo.findStudentsForIdFaculty(1L);
-
-        assertNotNull(res);
-        assertTrue(res.size()>0);
-    }*/
-
     @Test
     public void findStudentForFacultyExt() {
-        List<DataStudent> data = studentRepo.findStudentForFacultyExt(1L);
+        var data = studentRepo.findStudentInFaculty(1L);
 
-        List<RecDataStudent> lsRecordData = data.stream().map(obj-> new RecDataStudent(
-                    obj.getId(), obj.getFacultyName(), obj.getName(), obj.getAge() )
-        ).collect(Collectors.toList());
+        List<RecDataStudent> lsRecordData = data.stream()
+                .map(obj-> new RecDataStudent(obj)).collect(Collectors.toList());
 
         assertNotNull(lsRecordData);
         assertTrue(lsRecordData.size()>0);
 
-        assertEquals("Gryffindor", lsRecordData.get(0).facultyString());
+        assertEquals("Gryffindor", lsRecordData.get(0).facultyName());
         assertEquals("Lucius Malfoy", lsRecordData.get(0).name());
 
     }

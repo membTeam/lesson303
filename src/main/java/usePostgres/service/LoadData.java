@@ -22,12 +22,12 @@ public class LoadData implements CommandLineRunner {
     private FacultyRepository facultyRepo;
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
         try(Scanner scanner = new Scanner(new File("loadData.csv"))) {
 
-            var id = 1L;
-
             studentRepo.deleteAll();
+            var id = studentRepo.getMaxID().orElse(1L);
+
             while (scanner.hasNextLine()) {
                 var arr = scanner.nextLine().split(",");
 
@@ -45,7 +45,8 @@ public class LoadData implements CommandLineRunner {
             }
 
             System.out.println("Загружены начальные данные");
-        } catch (IOException ex) {
+
+        } catch (Exception ex) {
             throw  new ErrBadRequestException("Ошибка загрузки исходных данных :\n" + ex.getMessage());
         }
     }

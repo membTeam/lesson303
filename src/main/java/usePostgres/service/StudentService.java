@@ -2,11 +2,11 @@ package usePostgres.service;
 
 import org.springframework.stereotype.Service;
 import usePostgres.exception.ErrBadRequestException;
-import usePostgres.models.Student;
-import usePostgres.repositories.*;
-
 import java.util.List;
 import java.util.stream.Collectors;
+
+import usePostgres.models.Student;
+import usePostgres.repositories.*;
 
 import static usePostgres.exception.RunErrBadRequestException.runException;
 
@@ -47,15 +47,15 @@ public class StudentService {
         return studentRepo.findByAgeBetween(start, end);
     }
 
-    public List<RecDataStudent> allStudentInFacultyExt(Long id) {
-        List<DataStudent> data = studentRepo.findStudentForFacultyExt(id);
+    public List<RecDataStudent> allStudentInFaculty(Long id) {
 
-        return data.stream().map(obj-> new RecDataStudent(obj))
+        return studentRepo.findStudentInFaculty(id)
+                .stream().map(obj-> new RecDataStudent(obj))
                 .collect(Collectors.toList());
     }
 
     public List<Student> allStudentInFaculty(String faculty) {
-        return studentRepo.findStudentForFaculty(faculty);
+        return studentRepo.findStudentInFaculty(faculty);
     }
 
     public Iterable<Student> age(Integer age) {
@@ -66,19 +66,19 @@ public class StudentService {
 
         checkData(item);
 
-        if (studentRepo.existDataForName(item.name())) {
+        if (studentRepo.existDataForStudentName(item.name())) {
             runException("Повторный ввод данных");
         }
 
-        var maxId = studentRepo.getMaxID();
+        var maxId = studentRepo.getMaxID().orElse(0L);
 
         var student = new Student();
-        var facultet = facultyRepository.getReferenceById(item.facultyId());
+        var faculty = facultyRepository.getReferenceById(item.facultyId());
 
         student.setId(++maxId);
         student.setAge(item.age());
         student.setName(item.name());
-        student.setFaculty(facultet);
+        student.setFaculty(faculty);
 
         return studentRepo.save(student);
     }
@@ -90,10 +90,10 @@ public class StudentService {
 
     public Student update(RecRequestStudent item) {
 
+        checkData(item);
+
         var student = studentRepo.findById(item.id())
                 .orElseThrow(()-> {throw new ErrBadRequestException("Нет данных по студенту");});
-
-        checkData(item);
 
         student.setName(item.name());
         student.setAge(item.age());
@@ -107,7 +107,8 @@ public class StudentService {
 
     public Student delete(Long id) {
         var item = studentRepo.findById(id)
-                .orElseThrow(()-> {throw new ErrBadRequestException("Нет данных по id");}) ;
+                .orElseThrow(()-> {throw new ErrBadRequestException("Нет данных по id");});
+
         studentRepo.deleteById(id);
 
         return item;
