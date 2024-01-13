@@ -17,30 +17,50 @@ public class FacultyRepositoryTest {
 
     @Test
     public void existDataForName() {
-        var res = facultyRepository.existDataForName("Slytherin");
+        var res = facultyRepository.existDataForFacultyName("Slytherin");
 
         assertTrue(res);
     }
 
     @Test
     public void getMaxID() {
-        var res = studentRepository.getMaxID();
+        var res = studentRepository.getMaxID().orElse(0L);
 
         assertTrue (res>0);
     }
 
     @Test
     public void existDataForNameStudent() {
-        var res = studentRepository.existDataForName("Lucius Malfoy");
+        var res = studentRepository.existDataForStudentName("Lucius Malfoy");
         assertTrue( res);
     }
-
 
     @Test
     public void getMaxIDForFaculty() {
         var res = facultyRepository.getMaxID();
 
         assertTrue(res > 0);
+    }
+
+    @Test
+    public void existDataForFaculty() {
+        var res = studentRepository.existDataForFacultyId(2L);
+
+        assertTrue(res);
+    }
+
+    @Test
+    public void findByAge() {
+        var res = studentRepository.findByAge(18);
+
+        assertTrue(res.size() > 0);
+    }
+
+    @Test
+    public void existStudent() {
+        var res = facultyRepository.existDataForStudentId(1L);
+
+        assertTrue(res);
     }
 
 }
