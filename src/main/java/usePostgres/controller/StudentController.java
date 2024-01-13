@@ -2,7 +2,11 @@ package usePostgres.controller;
 
 import org.springframework.web.bind.annotation.*;
 import usePostgres.models.Student;
+import usePostgres.repositories.RecDataStudent;
+import usePostgres.repositories.RecRequestStudent;
 import usePostgres.service.StudentService;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("student")
@@ -14,13 +18,28 @@ public class StudentController {
         this.studentServ = studentServ;
     }
 
+    @GetMapping("age/{start}/{end}")
+    public List<Student> studentsAgeBetween(@PathVariable Integer start, @PathVariable Integer end) {
+        return studentServ.studentsAgeBetween(start, end);
+    }
+
+    @GetMapping("all/ext/{id}")
+    public List<RecDataStudent> allStudentInFaculty(@PathVariable Long id) {
+        return studentServ.allStudentInFaculty(id);
+    }
+
+    @GetMapping("all/{faculty}")
+    public List<Student> allStudentInFaculty(@PathVariable String faculty) {
+        return studentServ.allStudentInFaculty(faculty);
+    }
+
     @GetMapping("read/{id}")
     public Student read(@PathVariable Long id) {
         return studentServ.read(id);
     }
 
     @PostMapping("add")
-    public Student add(@RequestBody Student item) {
+    public Student add(@RequestBody RecRequestStudent item) {
         return studentServ.add(item);
     }
 
@@ -31,7 +50,7 @@ public class StudentController {
 
 
     @PutMapping("update")
-    public Student delete(@RequestBody Student item) {
+    public Student delete(@RequestBody RecRequestStudent item) {
         return studentServ.update(item);
     }
 
