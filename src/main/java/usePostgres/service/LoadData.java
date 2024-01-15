@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import usePostgres.exception.ErrBadRequestException;
 import usePostgres.models.Faculty;
 import usePostgres.models.Student;
+import usePostgres.repositories.AvatarRepository;
 import usePostgres.repositories.FacultyRepository;
 import usePostgres.repositories.StudentRepository;
 
@@ -21,10 +22,14 @@ public class LoadData implements CommandLineRunner {
     @Autowired
     private FacultyRepository facultyRepo;
 
+    @Autowired
+    private AvatarRepository avatarRepo;
+
     @Override
     public void run(String... args) {
         try(Scanner scanner = new Scanner(new File("loadData.csv"))) {
 
+            avatarRepo.deleteAll();
             studentRepo.deleteAll();
             var id = studentRepo.getMaxID().orElse(1L);
 
