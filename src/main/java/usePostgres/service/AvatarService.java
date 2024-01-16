@@ -51,7 +51,6 @@ public class AvatarService {
 
         Avatar avatar = new Avatar();
 
-        //avatar.setId(student_id);
         avatar.setStudent(student);
         avatar.setFilePath(filePath.toString());
         avatar.setFileSize((int) avatarFile.getSize());

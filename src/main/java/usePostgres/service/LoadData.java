@@ -29,6 +29,10 @@ public class LoadData implements CommandLineRunner {
     public void run(String... args) {
         try(Scanner scanner = new Scanner(new File("loadData.csv"))) {
 
+            if (1 < 2) {
+                return;
+            }
+
             avatarRepo.deleteAll();
             studentRepo.deleteAll();
             var id = studentRepo.getMaxID().orElse(1L);
