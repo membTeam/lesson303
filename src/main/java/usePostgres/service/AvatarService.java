@@ -35,9 +35,10 @@ public class AvatarService {
     public void add(Long student_id, MultipartFile avatarFile) throws IOException {
         var student = studentRepo.getReferenceById(student_id);
 
-        Path filePath = Path.of(avatarsDir,
-                student.getName() +
-                         getExtensions(avatarFile.getOriginalFilename()));
+        var fileName = student.getName() +
+                getExtensions(avatarFile.getOriginalFilename());
+
+        Path filePath = Path.of(avatarsDir,fileName);
 
         Files.deleteIfExists(filePath);
 
@@ -51,8 +52,9 @@ public class AvatarService {
 
         Avatar avatar = new Avatar();
 
-        avatar.setStudent(student);
-        avatar.setFilePath(filePath.toString());
+        //avatar.setStudent(student);
+        avatar.setId(student_id);
+        avatar.setFilePath(fileName);
         avatar.setFileSize((int) avatarFile.getSize());
         avatar.setMediaType(avatarFile.getContentType());
         avatar.setData(avatarFile.getBytes());
