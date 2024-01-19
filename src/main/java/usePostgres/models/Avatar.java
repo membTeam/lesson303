@@ -5,8 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @Entity
 @Data
 @NoArgsConstructor
@@ -27,10 +25,7 @@ public class Avatar {
     private byte[] data;
 
     @OneToOne
-    private Student student;
-
-    /*@OneToOne(fetch = FetchType.LAZY)
     @MapsId
     @JoinColumn(name = "id")
-    private Student student;*/
+    private Student student;
 }

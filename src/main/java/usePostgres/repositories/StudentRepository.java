@@ -11,12 +11,9 @@ import java.util.Optional;
 
 public interface StudentRepository extends JpaRepository<Student, Long> {
 
-    /*
-
-    @Query(value = "FROM Student s left join fetch s.avatar av where LOWER(trim(av.filePath)) = LOWER(trim(:file))")
-    List<Student> getAvatarFromStudent(String file);
-
-    */
+    @Query(value = "from Student st where st.id "+
+            "in (select a.id From Avatar a where a.fileSize > 1000) order by st.id")
+    List<Student> getStudentByFileSize();
 
     @Query(value = "select st, av FROM Student st, Avatar av " +
             "where st.id = av.student.id and av.fileSize = 54563 ")

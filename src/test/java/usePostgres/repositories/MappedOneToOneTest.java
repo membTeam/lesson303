@@ -24,7 +24,8 @@ public class MappedOneToOneTest {
     }
 
     @Test
-    public void findAvatarForSize3() {
+    public void getAvatarData() {
+        // использование внутренних связей -> join
         var item = studentRepo.getAvatarData(48338);
 
         assertTrue(item.size()>0);
@@ -47,8 +48,17 @@ public class MappedOneToOneTest {
 
     }
 
+    @Test
+    public void getStudentByFileSize() {
 
+        // получаем отсортированный список list
+        var item = studentRepo.getStudentByFileSize();
 
+        assertTrue(item.size()>0);
 
+        var student = (Student) item.get(0);
+        assertEquals("Lucius Malfoy", student.getName() );
+
+    }
 
 }
