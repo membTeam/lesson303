@@ -10,9 +10,8 @@ import usePostgres.repositories.AvatarRepository;
 import usePostgres.repositories.FacultyRepository;
 import usePostgres.repositories.StudentRepository;
 
-import java.io.IOException;
-import java.util.Scanner;
 import java.io.File;
+import java.util.Scanner;
 
 @Configuration
 public class LoadData implements CommandLineRunner {
@@ -28,10 +27,6 @@ public class LoadData implements CommandLineRunner {
     @Override
     public void run(String... args) {
         try(Scanner scanner = new Scanner(new File("loadData.csv"))) {
-
-            if (1 < 2) {
-                return;
-            }
 
             avatarRepo.deleteAll();
             studentRepo.deleteAll();
