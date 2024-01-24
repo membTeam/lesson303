@@ -24,14 +24,14 @@ public class FacultyRepositoryTest {
 
     @Test
     public void getMaxID() {
-        var res = studentRepository.getMaxID().orElse(0L);
+        var res = studentRepository.getMaxID();
 
         assertTrue (res>0);
     }
 
     @Test
     public void existDataForNameStudent() {
-        var res = studentRepository.existDataForStudentName("Lucius Malfoy");
+        var res = studentRepository.existDataForStudentName("Tom Riddle");
         assertTrue( res);
     }
 

@@ -1,7 +1,9 @@
 package usePostgres.repositories;
 
+import jakarta.persistence.StoredProcedureParameter;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.jpa.repository.query.Procedure;
 import usePostgres.models.Avatar;
 import usePostgres.models.Student;
 
@@ -22,13 +24,10 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
     @Query(value = "select a FROM Avatar a join fetch a.student where a.fileSize = :size")
     List<Avatar> getAvatarData(int size);
 
+    @Procedure("loaddatatostudent")
+    void loadDataStudent();
 
     // ************************************************************************
-
-
-/*    @Query(value = "SELECT av.* FROM Avatar av join Student st on st.id = av.id where st.id = 1;",
-            nativeQuery = true)
-    Object getAvatar(Long id);*/
 
     @Query(value = "FROM Student where id = :id")
     Student getItemAvatar2(Long id);
@@ -53,7 +52,7 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
             nativeQuery = true )
     boolean existDataForStudentName(String name);
 
-    @Query(value="select max(st.id) from Student st" )
-    Optional<Long> getMaxID();
+    @Query(value = "SELECT function('maxidstudent')")
+    Long getMaxID();
 
 }

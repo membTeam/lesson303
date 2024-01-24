@@ -70,7 +70,7 @@ public class StudentService {
             runException("Повторный ввод данных");
         }
 
-        var maxId = studentRepo.getMaxID().orElse(0L);
+        var maxId = studentRepo.getMaxID();
 
         var student = new Student();
         var faculty = facultyRepository.getReferenceById(item.facultyId());

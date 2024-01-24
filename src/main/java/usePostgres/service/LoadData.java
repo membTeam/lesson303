@@ -26,27 +26,9 @@ public class LoadData implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        try(Scanner scanner = new Scanner(new File("loadData.csv"))) {
 
-            avatarRepo.deleteAll();
-            studentRepo.deleteAll();
-            var id = studentRepo.getMaxID().orElse(1L);
-
-            while (scanner.hasNextLine()) {
-                var arr = scanner.nextLine().split(",");
-
-                Long idFaculty = Long.parseLong(arr[0].trim());
-                Faculty faculty = facultyRepo.getReferenceById(idFaculty);
-
-                var student = new Student();
-
-                student.setId(id++);
-                student.setFaculty(faculty);
-                student.setAge(Integer.parseInt(arr[1].trim()));
-                student.setName(arr[2].trim());
-
-                studentRepo.save(student);
-            }
+        try{
+            studentRepo.loadDataStudent();
 
             System.out.println("Загружены начальные данные");
 
