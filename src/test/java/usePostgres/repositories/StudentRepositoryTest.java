@@ -27,7 +27,7 @@ public class StudentRepositoryTest {
 
     @Test
     public void findStudentsForFaculty() {
-        var res = studentRepo.findStudentInFaculty(1L);
+        var res = studentRepo.findStudentInFaculty(101L);
 
         assertTrue(res.size()>0);
     }
@@ -49,7 +49,7 @@ public class StudentRepositoryTest {
 
     @Test
     public void findStudentForFacultyExt() {
-        var data = studentRepo.findStudentInFaculty(1L);
+        var data = studentRepo.findStudentInFaculty(101L);
 
         List<RecDataStudent> lsRecordData = data.stream()
                 .map(obj-> new RecDataStudent(obj)).collect(Collectors.toList());

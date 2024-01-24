@@ -30,7 +30,7 @@ public class MappedOneToOneTest {
 
         assertTrue(item.size()>0);
 
-        assertEquals("avatars/Tom Riddle.png", item.get(0).getFilePath());
+        assertEquals("avatars/Percy Weasley.png", item.get(0).getFilePath());
     }
 
     @Test
@@ -44,20 +44,19 @@ public class MappedOneToOneTest {
         assertNotNull(item.get(0)[1]);
 
         var student = (Student) item.get(0)[0];
-        assertEquals("Lucius Malfoy", student.getName());
+        assertEquals("Tom Riddle", student.getName());
 
     }
 
     @Test
     public void getStudentByFileSize() {
 
-        // получаем отсортированный список list
         var item = studentRepo.getStudentByFileSize();
 
         assertTrue(item.size()>0);
 
         var student = (Student) item.get(0);
-        assertEquals("Lucius Malfoy", student.getName() );
+        assertEquals("Tom Riddle", student.getName() );
 
     }
 

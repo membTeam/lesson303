@@ -42,6 +42,12 @@ public class StudentControllerTest {
 
     private final HttpEntity httpEntity = new HttpEntity<>(httpHeaders());
 
+    private String getUrl(String path, Long id) {
+        return id != null
+                ? String.format("%s/%s/%d", baseUrl, path, id)
+                : String.format("%s/%s",  baseUrl, path);
+    }
+
     @BeforeEach
     public void setUp() {
         baseUrl = String.format("http://localhost:%d/student", port);
@@ -51,7 +57,7 @@ public class StudentControllerTest {
     public void studentsAgeBetween() {
 
         final int start = 17, end = 20;
-        var url = String.format("%s/age/%d/%d", baseUrl, start, end);
+        var url = getUrl("age", null) + '/' + start + '/' + end;;
 
         ResponseEntity<List<Student>> lsStudent
                 = template.exchange(url,
@@ -63,13 +69,11 @@ public class StudentControllerTest {
 
     @Test
     public void allStudentInFaculty() {
-        var facultyId = 1L;
-        var url = String.format("%s/all/ext/%d", baseUrl, facultyId);
+        var facultyId = 101L;
+        var url = getUrl("all/ext", facultyId);
 
-        ResponseEntity<List<RecDataStudent>> lsStudent
-                = template.exchange(url,
-                HttpMethod.GET, httpEntity,
-                new ParameterizedTypeReference<List<RecDataStudent>>() {});
+        ResponseEntity<List<RecDataStudent>> lsStudent = template.exchange(url,
+                HttpMethod.GET, httpEntity, new ParameterizedTypeReference<List<RecDataStudent>>() {});
 
         assertThat(lsStudent).isNotNull();
         assertThat(lsStudent.getBody().size()).isGreaterThan(0);
@@ -78,7 +82,7 @@ public class StudentControllerTest {
     @Test
     public void allStudentInFaculty2 () {
         var facultyName = "Gryffindor";
-        var url = String.format("%s/all/%s", baseUrl, facultyName);
+        var url = getUrl("all", null) + '/' + facultyName;
 
         ResponseEntity<List<Student>> lsStudent = template.exchange(url,
                 HttpMethod.GET, httpEntity, parTypeStudentReference);
@@ -90,7 +94,7 @@ public class StudentControllerTest {
     @Test
     public void read() {
         var studentId = 101L;
-        var url = String.format("%s/read/%d", baseUrl, studentId);
+        var url = getUrl("read", studentId);
 
         Student student = template.getForObject(url, Student.class);
         assertThat(student).isNotNull();
@@ -98,12 +102,12 @@ public class StudentControllerTest {
 
     @Test
     public void RecRequestStudent_methosPost() {
+        var url = getUrl("add", null);
 
         RecRequestStudent item =
-                new RecRequestStudent(-1L, 1L, 18, "Student forTest");
+                new RecRequestStudent(-1L, 101L, 18, "Student forTest");
 
-        var resPost = template.postForObject("http://localhost:" +
-                    port + "/student/add", item, Student.class);
+        var resPost = template.postForObject(url, item, Student.class);
 
         assertThat(resPost).isNotNull();
         assertThat(resPost.getName()).isEqualTo("Student forTest");
@@ -112,14 +116,13 @@ public class StudentControllerTest {
     @Test
     public void delete() {
         RecRequestStudent student =
-                new RecRequestStudent(-1L, 2L, 20, "Student forTest");
-        var urlPost = String.format("%s/%s", baseUrl,"add");
+                new RecRequestStudent(-1L, 102L, 20, "Student forTest");
+        var urlPost = getUrl("add", null);
         var resPost = template.postForObject(urlPost, student, Student.class);
 
         Long id = resPost.getId();
-        var url = String.format("%s/delete/%d", baseUrl, id);
-
-        ResponseEntity<Student> resDel = template.exchange(url,
+        var urlDelete = getUrl("delete", id);
+        ResponseEntity<Student> resDel = template.exchange(urlDelete,
                 HttpMethod.DELETE, httpEntity, new ParameterizedTypeReference<Student>(){} );
 
         assertThat(resDel).isNotNull();
@@ -129,26 +132,25 @@ public class StudentControllerTest {
 
     @Test
     public void update() {
-        var urlPost = String.format("%s/%s", baseUrl,"add");
+        var urlPost = getUrl("add", null);
         var student =
-                new RecRequestStudent(-1L, 2L, 20, "Student forTest");
+                new RecRequestStudent(-1L, 102L, 20, "Student forTest");
         var resPost = template.postForObject(urlPost, student, Student.class);
 
-        var urlPut = String.format("%s/update", baseUrl);
-        var recRequestStudent = new RecRequestStudent(resPost.getId(), 2L, 20, "Student update");
+        var urlPut = getUrl("update", null);
+        var recRequestStudent = new RecRequestStudent(resPost.getId(), 102L, 20, "Student update");
         template.put(urlPut, recRequestStudent);
 
         var studentUpdated = studentRepo.findById(resPost.getId());
         assertThat(studentUpdated.orElseThrow().getName())
                 .isEqualTo("Student update");
-
     }
 
     @Test
     public void age() {
 
-        var age = 18;
-        var url = String.format("%s/%s/%d", baseUrl, "age", age);
+        var age = 18L;
+        var url = getUrl("age", age);
 
         ResponseEntity<List<Student>> lsStudent = template.exchange(url,
                 HttpMethod.GET, httpEntity, parTypeStudentReference);

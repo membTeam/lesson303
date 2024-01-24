@@ -21,7 +21,7 @@ public class FacultyController {
         return facultyService.add(faculty);
     }
 
-    @GetMapping("/read/{id}")
+    @GetMapping("read/{id}")
     public Faculty read(@PathVariable Long id) {
         return facultyService.read(id);
     }
