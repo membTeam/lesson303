@@ -55,4 +55,7 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
     @Query(value = "SELECT function('maxidstudent')")
     Long getMaxID();
 
+    @Query(value = "SELECT function('maxidstudentfortesting')")
+    Long getMaxIDForTesting();
+
 }

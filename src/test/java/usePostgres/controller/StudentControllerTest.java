@@ -14,10 +14,13 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import usePostgres.models.Student;
+import usePostgres.repositories.FacultyRepository;
 import usePostgres.repositories.RecDataStudent;
+import usePostgres.repositories.RecRequestStudent;
+import usePostgres.repositories.StudentRepository;
 
 import java.util.List;
-import static usePostgres.controller.HTTPHeadersObj.httpHeaders;
+import static usePostgres.service.HTTPHeaders.httpHeaders;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class StudentControllerTest {
@@ -26,6 +29,12 @@ public class StudentControllerTest {
 
     @Autowired
     TestRestTemplate template;
+
+    @Autowired
+    FacultyRepository facultyRepo;
+
+    @Autowired
+    StudentRepository studentRepo;
 
     private String baseUrl;
 
@@ -80,7 +89,7 @@ public class StudentControllerTest {
 
     @Test
     public void read() {
-        var studentId = 1L;
+        var studentId = 101L;
         var url = String.format("%s/read/%d", baseUrl, studentId);
 
         Student student = template.getForObject(url, Student.class);
@@ -89,14 +98,63 @@ public class StudentControllerTest {
 
     @Test
     public void RecRequestStudent_methosPost() {
-        var student = new Student();
-        student.setId(100L);
-        student.setAge(18);
-        student.setName("Student forTest");
 
-        // TODO: использовать HQL for get faculty
+        RecRequestStudent item =
+                new RecRequestStudent(-1L, 1L, 18, "Student forTest");
 
+        var resPost = template.postForObject("http://localhost:" +
+                    port + "/student/add", item, Student.class);
+
+        assertThat(resPost).isNotNull();
+        assertThat(resPost.getName()).isEqualTo("Student forTest");
+    }
+
+    @Test
+    public void delete() {
+        RecRequestStudent student =
+                new RecRequestStudent(-1L, 2L, 20, "Student forTest");
+        var urlPost = String.format("%s/%s", baseUrl,"add");
+        var resPost = template.postForObject(urlPost, student, Student.class);
+
+        Long id = resPost.getId();
+        var url = String.format("%s/delete/%d", baseUrl, id);
+
+        ResponseEntity<Student> resDel = template.exchange(url,
+                HttpMethod.DELETE, httpEntity, new ParameterizedTypeReference<Student>(){} );
+
+        assertThat(resDel).isNotNull();
+        assertThat(resDel.getBody().getName()).isEqualTo("Student forTest");
 
     }
+
+    @Test
+    public void update() {
+        var urlPost = String.format("%s/%s", baseUrl,"add");
+        var student =
+                new RecRequestStudent(-1L, 2L, 20, "Student forTest");
+        var resPost = template.postForObject(urlPost, student, Student.class);
+
+        var urlPut = String.format("%s/update", baseUrl);
+        var recRequestStudent = new RecRequestStudent(resPost.getId(), 2L, 20, "Student update");
+        template.put(urlPut, recRequestStudent);
+
+        var studentUpdated = studentRepo.findById(resPost.getId());
+        assertThat(studentUpdated.orElseThrow().getName())
+                .isEqualTo("Student update");
+
+    }
+
+    @Test
+    public void age() {
+
+        var age = 18;
+        var url = String.format("%s/%s/%d", baseUrl, "age", age);
+
+        ResponseEntity<List<Student>> lsStudent = template.exchange(url,
+                HttpMethod.GET, httpEntity, parTypeStudentReference);
+
+        assertThat(lsStudent).isNotNull();
+    }
+
 
 }

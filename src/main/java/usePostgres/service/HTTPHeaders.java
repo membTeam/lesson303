@@ -1,9 +1,9 @@
-package usePostgres.controller;
+package usePostgres.service;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 
-public class HTTPHeadersObj {
+public class HTTPHeaders {
     public static HttpHeaders httpHeaders() {
 
         var httpHeaders = new HttpHeaders();

@@ -66,11 +66,11 @@ public class StudentService {
 
         checkData(item);
 
-        if (studentRepo.existDataForStudentName(item.name())) {
+        if (item.id()>=0 && studentRepo.existDataForStudentName(item.name())) {
             runException("Повторный ввод данных");
         }
 
-        var maxId = studentRepo.getMaxID();
+        var maxId = item.id() >= 0 ? studentRepo.getMaxID() : studentRepo.getMaxIDForTesting();
 
         var student = new Student();
         var faculty = facultyRepository.getReferenceById(item.facultyId());
