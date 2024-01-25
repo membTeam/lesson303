@@ -33,9 +33,6 @@ public class StudentControllerTestMVC {
     @MockBean
     private FacultyRepository facultyRepo;
 
-    @InjectMocks
-    private StudentService studentServ;
-
     @Test
     public void studentsAgeBetween() throws Exception {
         final int start = 17, end = 20;

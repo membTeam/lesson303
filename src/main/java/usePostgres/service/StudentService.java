@@ -25,8 +25,8 @@ public class StudentService {
     private void checkData(RecRequestStudent item) {
         String strErr = "";
 
-        if (item.age() == 0 || item.age() < 17 || item.age() > 25) {
-            strErr = "Возраст д/быть больше 17 и меньше 25";
+        if (item.age() == 0 || item.age() < 15 || item.age() > 25) {
+            strErr = "Возраст д/быть больше 15 и меньше 25";
         }
 
         if (item.name() == null || item.name().isBlank()) {

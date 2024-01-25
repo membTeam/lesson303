@@ -24,6 +24,13 @@ public class ServiceTesting {
         return facultyObj;
     }
 
+    public static Faculty createFacultyExt() {
+        var faculty = createFaculty();
+        faculty.setId(-1L);
+
+        return faculty;
+    }
+
     public static Faculty createFaculty() {
 
         var faculty = new Faculty();
