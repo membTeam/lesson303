@@ -24,6 +24,16 @@ public class ServiceTesting {
         return facultyObj;
     }
 
+    public static Faculty createFaculty() {
+
+        var faculty = new Faculty();
+        faculty.setId(1L);
+        faculty.setName("facultyTesting");
+        faculty.setColor("color");
+
+        return faculty;
+    }
+
     public static Student createStudent() {
 
         var student = new Student();
