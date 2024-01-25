@@ -3,7 +3,6 @@ package usePostgres.controller;
 
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -26,16 +25,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class FacultyControllerTestMVC {
+public class StudentControllerTestMVC {
     @Autowired
     private MockMvc mockMvc;
     @MockBean
     private StudentRepository studentRepo;
     @MockBean
     private StudentService studentServ;
-
-    @InjectMocks
-    private StudentController studentController;
 
     public static Student createStudent() {
         var student = new Student();
