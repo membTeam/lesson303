@@ -10,9 +10,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import usePostgres.models.Faculty;
-import usePostgres.models.Student;
 import usePostgres.repositories.FacultyRepository;
-import usePostgres.repositories.RecRequestStudent;
 import usePostgres.service.FacultyService;
 
 import static org.mockito.Mockito.any;
@@ -20,6 +18,7 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import static usePostgres.controller.ServiceTesting.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -40,14 +39,6 @@ public class FacultyControllerMVCTest {
         faculty.setColor("color");
 
         return faculty;
-    }
-    public static JSONObject creatJSONobjRecRequest(Faculty faculty) throws Exception {
-        JSONObject facultyObj = new JSONObject();
-        facultyObj.put("id", 1L);
-        facultyObj.put("name", faculty.getName());
-        facultyObj.put("color", faculty.getColor());
-
-        return facultyObj;
     }
 
     @Test

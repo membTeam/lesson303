@@ -20,7 +20,7 @@ import usePostgres.repositories.RecRequestStudent;
 import usePostgres.repositories.StudentRepository;
 
 import java.util.List;
-import static usePostgres.service.HTTPHeaders.httpHeaders;
+import static usePostgres.controller.ServiceTesting.httpHeaders;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class StudentControllerTest {

@@ -23,6 +23,7 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import static usePostgres.controller.ServiceTesting.*;
 @SpringBootTest
 @AutoConfigureMockMvc
 public class StudentControllerTestMVC {
@@ -32,25 +33,6 @@ public class StudentControllerTestMVC {
     private StudentRepository studentRepo;
     @MockBean
     private StudentService studentServ;
-
-    public static Student createStudent() {
-        var student = new Student();
-        student.setId(1L);
-        student.setName("Name for testing");
-        student.setAge(18);
-
-        return student;
-    }
-
-    public static JSONObject creatJSONobjRecRequest(Student student) throws Exception {
-        JSONObject studentObj = new JSONObject();
-        studentObj.put("id", 1L);
-        studentObj.put("facultyId", 101L);
-        studentObj.put("age", student.getAge());
-        studentObj.put("name", student.getName());
-
-        return studentObj;
-    }
 
     @Test
     public void studentsAgeBetween() throws Exception {

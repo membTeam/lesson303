@@ -14,7 +14,7 @@ import usePostgres.models.Faculty;
 import usePostgres.repositories.FacultyRepository;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static usePostgres.service.HTTPHeaders.httpHeaders;
+import static usePostgres.controller.ServiceTesting.httpHeaders;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class FacultyControllerTest {
