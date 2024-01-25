@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.query.Procedure;
 import usePostgres.models.Avatar;
+import usePostgres.models.DataStudentImpl;
 import usePostgres.models.Student;
 
 import java.util.List;
@@ -32,15 +33,17 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
     @Query(value = "FROM Student where id = :id")
     Student getItemAvatar2(Long id);
 
-    @Query(value = "Select st.id id, fc.name facultyName, st.name name, st.age age " +
+    @Query(value = "Select new usePostgres.models.DataStudentImpl(st.id, fc.name, st.name, st.age) " +
             "from Faculty fc join fc.students st " +
             "where fc.id = :id")
-    List<DataStudent> findStudentInFaculty(Long id);
+    List<DataStudentImpl> findStudentInFaculty(Long id);
 
     @Query(value = "FROM Student where faculty.name = :faculty"  )
     List<Student> findStudentInFaculty(String faculty);
 
-    List<Student> findByAgeBetween(int start, int end);
+    //List<Student> findByAgeBetween(Integer start, Integer end);
+    @Query("FROM Student s where s.age > :start and s.age < :end")
+    List<Student> findByAgeBetween(Integer start, Integer end);
 
     List<Student> findByAge(int age);
 

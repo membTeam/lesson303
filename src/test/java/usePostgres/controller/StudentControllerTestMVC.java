@@ -1,8 +1,8 @@
 package usePostgres.controller;
 
 
-import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -10,19 +10,18 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import usePostgres.models.DataStudentImpl;
 import usePostgres.models.Student;
-import usePostgres.repositories.RecDataStudent;
-import usePostgres.repositories.RecRequestStudent;
+import usePostgres.repositories.FacultyRepository;
 import usePostgres.repositories.StudentRepository;
 import usePostgres.service.StudentService;
 
 import java.util.List;
+import java.util.Optional;
 
-import static org.mockito.Mockito.any;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 import static usePostgres.controller.ServiceTesting.*;
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -32,6 +31,9 @@ public class StudentControllerTestMVC {
     @MockBean
     private StudentRepository studentRepo;
     @MockBean
+    private FacultyRepository facultyRepo;
+
+    @InjectMocks
     private StudentService studentServ;
 
     @Test
@@ -39,7 +41,7 @@ public class StudentControllerTestMVC {
         final int start = 17, end = 20;
         List<Student> lsStudent = List.of(createStudent());
 
-        when(studentServ.studentsAgeBetween(any(Integer.class), any(Integer.class))).thenReturn(lsStudent);
+        when(studentRepo.findByAgeBetween(any(Integer.class), any(Integer.class))).thenReturn(lsStudent);
 
         mockMvc.perform(MockMvcRequestBuilders
                         .get("/student/age/" + start + '/'+end )
@@ -51,13 +53,10 @@ public class StudentControllerTestMVC {
     @Test
     public void allExt() throws Exception {
         var facultyId = 101L;
-        var recDataStudent = new RecDataStudent(1L,
-                "facultyName",
-                "nameStudent", 18);
-        List<RecDataStudent> lsStudent = List.of(recDataStudent);
+        var dataStudentImpl = new DataStudentImpl(1L, "facultyName", "nameStudent", 18);
+        var lsResFromRepo =  List.of(dataStudentImpl);
 
-        when(studentServ.allStudentInFaculty(any(Long.class))).thenReturn(lsStudent);
-
+        when(studentRepo.findStudentInFaculty(any(Long.class))).thenReturn(lsResFromRepo);
         mockMvc.perform(MockMvcRequestBuilders
                         .get("/student/all/ext/" + facultyId )
                         .accept(MediaType.APPLICATION_JSON))
@@ -70,8 +69,7 @@ public class StudentControllerTestMVC {
         var strFaculty = "Gryffindor";
         List<Student> lsStudent = List.of(createStudent());
 
-        when(studentServ.allStudentInFaculty(any(String.class))).thenReturn(lsStudent);
-
+        when(studentRepo.findStudentInFaculty(any(String.class))).thenReturn(lsStudent);
         mockMvc.perform(MockMvcRequestBuilders
                         .get("/student/all/" + strFaculty )
                         .accept(MediaType.APPLICATION_JSON))
@@ -83,7 +81,7 @@ public class StudentControllerTestMVC {
     public void read() throws Exception {
         var student = createStudent();
 
-        when(studentServ.read(any(Long.class))).thenReturn(student);
+        when(studentRepo.findById(any(Long.class))).thenReturn( Optional.of(student));
         mockMvc.perform(MockMvcRequestBuilders
                         .get("/student/read/" + student.getId() )
                         .accept(MediaType.APPLICATION_JSON))
@@ -93,10 +91,17 @@ public class StudentControllerTestMVC {
 
     @Test
     public void add() throws Exception {
+        var faculty = createFaculty();
         var student = createStudent();
+        student.setId(-1L);
+        var studentRes = createStudent();
+
         var studentObj = creatJSONobjRecRequest(student);
 
-        when(studentServ.add(any(RecRequestStudent.class))).thenReturn(student);
+        when(studentRepo.existDataForStudentName(any(String.class))).thenReturn(false);
+        when(studentRepo.getMaxIDForTesting()).thenReturn(0L);
+        when(facultyRepo.getReferenceById(any(Long.class))).thenReturn(faculty);
+        when(studentRepo.save(any(Student.class))).thenReturn(studentRes);
 
         mockMvc.perform(MockMvcRequestBuilders
                         .post("/student/add")
@@ -104,15 +109,16 @@ public class StudentControllerTestMVC {
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id").value(student.getId()))
-                .andExpect(jsonPath("$.name").value(student.getName()));
+                .andExpect(jsonPath("$.id").value(studentRes.getId()))
+                .andExpect(jsonPath("$.name").value(studentRes.getName()));
     }
 
     @Test
     public void delete() throws Exception {
         var student = createStudent();
 
-        when(studentServ.delete(any(Long.class))).thenReturn(student);
+        when(studentRepo.findById(any(Long.class))).thenReturn( Optional.of(student));
+        doNothing().when(studentRepo).deleteById(any(Long.class));
 
         mockMvc.perform(MockMvcRequestBuilders
                         .delete("/student/delete/"+ student.getId())
@@ -123,9 +129,17 @@ public class StudentControllerTestMVC {
     }
     @Test
     public void update() throws Exception {
+        var faculty = createFaculty();
         var student = createStudent();
+        student.setId(-1L);
+        student.setFaculty(faculty);
+
+        var studentRes = createStudent();
         var studentObj = creatJSONobjRecRequest(student);
-        when(studentServ.update(any(RecRequestStudent.class))).thenReturn(student);
+
+        when(studentRepo.findById(any(Long.class))).thenReturn( Optional.of(student));
+        when(facultyRepo.getReferenceById(any(Long.class))).thenReturn(faculty);
+        when(studentRepo.save(any(Student.class))).thenReturn(studentRes);
 
         mockMvc.perform(MockMvcRequestBuilders
                         .put("/student/update")
@@ -133,8 +147,8 @@ public class StudentControllerTestMVC {
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id").value(student.getId()))
-                .andExpect(jsonPath("$.name").value(student.getName()));
+                .andExpect(jsonPath("$.id").value(studentRes.getId()))
+                .andExpect(jsonPath("$.name").value(studentRes.getName()));
     }
     @Test
     public void age() throws Exception {
@@ -142,7 +156,8 @@ public class StudentControllerTestMVC {
         var student = createStudent();
         List<Student> lsStudent = List.of(student);
 
-        when(studentServ.age(any(Integer.class))).thenReturn(lsStudent);
+        when(studentRepo.findByAge(any(Integer.class))).thenReturn(lsStudent);
+
         mockMvc.perform(MockMvcRequestBuilders
                         .get("/student/age/" + student.getAge() )
                         .accept(MediaType.APPLICATION_JSON))
