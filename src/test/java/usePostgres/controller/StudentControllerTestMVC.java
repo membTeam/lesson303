@@ -95,7 +95,7 @@ public class StudentControllerTestMVC {
 
         var studentObj = creatJSONobjRecRequest(student);
 
-        when(studentRepo.existDataForStudentName(any(String.class))).thenReturn(false);
+        //when(studentRepo.existDataForStudentName(any(String.class))).thenReturn(false);
         when(studentRepo.getMaxIDForTesting()).thenReturn(0L);
         when(facultyRepo.getReferenceById(any(Long.class))).thenReturn(faculty);
         when(studentRepo.save(any(Student.class))).thenReturn(studentRes);

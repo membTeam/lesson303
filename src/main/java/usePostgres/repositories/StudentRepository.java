@@ -55,10 +55,25 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
             nativeQuery = true )
     boolean existDataForStudentName(String name);
 
+
+    // -------------------------------------
     @Query(value = "SELECT function('maxidstudent')")
     Long getMaxID();
 
     @Query(value = "SELECT function('maxidstudentfortesting')")
     Long getMaxIDForTesting();
+
+    @Query("select case " +
+            "when (select count(*) from Student where id < 100) > 0 " +
+                    "then (select max(id) from Student where id < 100) " +
+            "else 0 end")
+    int maxIdForTesting();
+
+    @Query("select case " +
+            "when (select count(*) from Student where id > 100) > 0 " +
+                    "then (select max(id) from Student where id > 100) " +
+            "else 0 end")
+    int maxIdForWeb();
+
 
 }
