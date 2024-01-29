@@ -13,9 +13,15 @@ import usePostgres.models.RecStudentWithAvatar;
 
 public interface StudentRepository extends JpaRepository<Student, Long> {
 
-    @Query(value = "from Student st where st.id "+
-            "in (select a.id From Avatar a where a.fileSize > 1000) order by st.id")
-    List<Student> getStudentByFileSize();
+    @Query("")
+    List<Student> getLastFiveStudent();
+
+    @Query("SELECT count(id) as amount FROM Student")
+    int getAllAmountStudent();
+
+    @Query("select avg(s.age) from Student s")
+    int getAvgStudent();
+
 
     @Query(value = "select st, av FROM Student st, Avatar av " +
             "where st.id = av.student.id and av.fileSize = 54563 ")
@@ -26,7 +32,6 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
             "where st.id = av.student.id and av.fileSize = :size ")
     List<RecStudentWithAvatar> avatarByStudent(int size);
 
-
     @Query(value = "select a FROM Avatar a join fetch a.student where a.fileSize = :size")
     List<Avatar> getAvatarData(int size);
 
@@ -34,9 +39,6 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
     void loadDataStudent();
 
     // ************************************************************************
-
-    @Query(value = "FROM Student where id = :id")
-    Student getItemAvatar2(Long id);
 
     @Query(value = "Select new usePostgres.models.DataStudentImpl(st.id, fc.name, st.name, st.age) " +
             "from Faculty fc join fc.students st " +
@@ -46,7 +48,6 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
     @Query(value = "FROM Student where faculty.name = :faculty"  )
     List<Student> findStudentInFaculty(String faculty);
 
-    //List<Student> findByAgeBetween(Integer start, Integer end);
     @Query("FROM Student s where s.age > :start and s.age < :end")
     List<Student> findByAgeBetween(Integer start, Integer end);
 

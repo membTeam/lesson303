@@ -14,6 +14,20 @@ public class TestingAnyMethodForSQL {
 
 
     @Test
+    public void getAvgStudent() {
+        var avg = studentRepo.getAvgStudent();
+
+        assertTrue(avg > 0);
+    }
+
+    @Test
+    public void getAllAmountStudent() {
+        var amount = studentRepo.getAllAmountStudent();
+
+        assertTrue(amount>0);
+    }
+
+    @Test
     public void getAvatarFromStudent() {
         var res = studentRepo.avatarByStudent(54563);
 

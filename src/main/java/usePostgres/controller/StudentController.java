@@ -18,6 +18,11 @@ public class StudentController {
         this.studentServ = studentServ;
     }
 
+    @GetMapping("amount-student")
+    public Integer amountStudent() {
+        return null;
+    }
+
     @GetMapping("age/{start}/{end}")
     public List<Student> studentsAgeBetween(@PathVariable Integer start, @PathVariable Integer end) {
         return studentServ.studentsAgeBetween(start, end);
