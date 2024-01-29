@@ -37,11 +37,11 @@ public class FacultyService {
 
         checkData(item);
 
-        if (facultyRepo.existDataForFacultyName(item.getName())) {
+        if (item.getId() >= 0 && facultyRepo.existDataForFacultyName(item.getName())) {
             runException("Повторный ввод данных");
         }
 
-        var getMaxId = facultyRepo.getMaxID();
+        var getMaxId = item.getId()>=0 ? facultyRepo.getMaxID() : facultyRepo.getMaxIdForTesting();
         item.setId(++getMaxId);
 
         return facultyRepo.save(item);
@@ -71,10 +71,12 @@ public class FacultyService {
             runException("Нет данных");
         }
 
-        if (facultyRepo.existDataForStudentId(id)) {
+        var result = item.orElseThrow(()-> {throw new ErrBadRequestException("Нет данных по идентификатору");});
+        if (facultyRepo.existDataForStudentId(result.getId())) {
             runException("Отклонение операции. Запись используется");
         }
-        facultyRepo.deleteById(id);
-        return item.orElseThrow(()-> {throw new ErrBadRequestException("Нет данных по идентификатору");});
+
+        facultyRepo.deleteById(result.getId());
+        return result;
     }
 }

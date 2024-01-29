@@ -53,9 +53,11 @@ public class AvatarService {
             bis.transferTo(bos);
         }
 
+        avatarRepo.deleteById(student_id);
+
         Avatar avatar = new Avatar();
 
-        avatar.setId(student_id);
+        avatar.setStudent(student);
         avatar.setFilePath(filePath.toString());
         avatar.setFileSize((int) avatarFile.getSize());
         avatar.setMediaType(avatarFile.getContentType());

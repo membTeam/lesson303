@@ -13,7 +13,7 @@ public interface AvatarRepository extends JpaRepository<Avatar, Long> {
             nativeQuery = true)
     Object findAvatarForSize(int size);*/
 
-    @Query(value = "SELECT a FROM usePostgres.models.Avatar as a WHERE a.fileSize = :size")
+    @Query(value = "SELECT a FROM Avatar as a WHERE a.fileSize = :size")
     Object findAvatarForSize2(int size);
 
     /*@Query(value = "select a, st from usePostgres.models.Avatar as a join fetch a.student as st "+

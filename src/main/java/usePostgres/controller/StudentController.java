@@ -48,7 +48,6 @@ public class StudentController {
         return studentServ.delete(id);
     }
 
-
     @PutMapping("update")
     public Student delete(@RequestBody RecRequestStudent item) {
         return studentServ.update(item);

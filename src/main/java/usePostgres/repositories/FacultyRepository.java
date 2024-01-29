@@ -14,7 +14,10 @@ public interface FacultyRepository extends JpaRepository<Faculty, Long> {
         nativeQuery = true )
     boolean existDataForFacultyName(String name);
 
-    @Query(value="select COALESCE(max(id), 0) res from faculty",
-            nativeQuery = true )
+    @Query("select function('maxIdFaculty')")
     Long getMaxID();
+
+    @Query("select function('maxIdFacultyForTesting')")
+    Long getMaxIdForTesting();
+
 }

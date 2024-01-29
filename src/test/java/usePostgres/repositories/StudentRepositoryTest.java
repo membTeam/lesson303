@@ -17,9 +17,17 @@ public class StudentRepositoryTest {
     @Autowired
     private FacultyRepository facultyRepository;
 
+
+    @Test
+    public void getMaxIdStudent() {
+        var res = studentRepo.getMaxID();
+
+        assertTrue(res > 0);
+    }
+
     @Test
     public void findStudentsForFaculty() {
-        var res = studentRepo.findStudentInFaculty(1L);
+        var res = studentRepo.findStudentInFaculty(101L);
 
         assertTrue(res.size()>0);
     }
@@ -41,7 +49,7 @@ public class StudentRepositoryTest {
 
     @Test
     public void findStudentForFacultyExt() {
-        var data = studentRepo.findStudentInFaculty(1L);
+        var data = studentRepo.findStudentInFaculty(101L);
 
         List<RecDataStudent> lsRecordData = data.stream()
                 .map(obj-> new RecDataStudent(obj)).collect(Collectors.toList());
@@ -50,7 +58,7 @@ public class StudentRepositoryTest {
         assertTrue(lsRecordData.size()>0);
 
         assertEquals("Gryffindor", lsRecordData.get(0).facultyName());
-        assertEquals("Lucius Malfoy", lsRecordData.get(0).name());
+        assertEquals("Tom Riddle", lsRecordData.get(0).name());
 
     }
 
