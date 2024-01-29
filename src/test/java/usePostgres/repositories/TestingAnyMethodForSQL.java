@@ -12,6 +12,18 @@ public class TestingAnyMethodForSQL {
     @Autowired
     private StudentRepository studentRepo;
 
+
+    @Test
+    public void getAvatarFromStudent() {
+        var res = studentRepo.avatarByStudent(54563);
+
+        var data = res.get(0);      // т.к. это список, выбираем первый элемент
+        var avatar = data.avatar(); // это объект класса RecStudentWithAvatar
+
+        assertEquals(54563, avatar.getFileSize());
+
+    }
+
     @Test
     public void maxIdForTesting() {
         var maxId = studentRepo.maxIdForTesting();

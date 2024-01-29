@@ -1,15 +1,14 @@
 package usePostgres.repositories;
 
-import jakarta.persistence.StoredProcedureParameter;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.query.Procedure;
+import java.util.List;
+
 import usePostgres.models.Avatar;
 import usePostgres.models.DataStudentImpl;
 import usePostgres.models.Student;
-
-import java.util.List;
-import java.util.Optional;
+import usePostgres.models.RecStudentWithAvatar;
 
 
 public interface StudentRepository extends JpaRepository<Student, Long> {
@@ -21,6 +20,12 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
     @Query(value = "select st, av FROM Student st, Avatar av " +
             "where st.id = av.student.id and av.fileSize = 54563 ")
     List<Object[]> getAvatarFromStudent();
+
+    @Query(value = "select new usePostgres.models.RecStudentWithAvatar(st, av) " +
+            "FROM Student st, Avatar av " +
+            "where st.id = av.student.id and av.fileSize = :size ")
+    List<RecStudentWithAvatar> avatarByStudent(int size);
+
 
     @Query(value = "select a FROM Avatar a join fetch a.student where a.fileSize = :size")
     List<Avatar> getAvatarData(int size);

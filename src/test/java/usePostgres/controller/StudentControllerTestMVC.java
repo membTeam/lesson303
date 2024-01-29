@@ -2,7 +2,6 @@ package usePostgres.controller;
 
 
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -14,7 +13,6 @@ import usePostgres.models.DataStudentImpl;
 import usePostgres.models.Student;
 import usePostgres.repositories.FacultyRepository;
 import usePostgres.repositories.StudentRepository;
-import usePostgres.service.StudentService;
 
 import java.util.List;
 import java.util.Optional;

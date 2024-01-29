@@ -47,7 +47,12 @@ public class FacultyControllerTest {
     @Test
     public void add() {
         var url = getUrl("add", null);
-        var resPost = template.postForObject(url, createFacultyExt(), Faculty.class);
+        var faculty =new Faculty();
+        faculty.setId(-1L);
+        faculty.setName("facultyTesting");
+        faculty.setColor("color");
+
+        var resPost = template.postForObject(url, faculty, Faculty.class);
 
         assertThat(resPost).isNotNull();
         assertThat(resPost.getName()).isEqualTo("facultyTesting");
