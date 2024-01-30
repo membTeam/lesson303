@@ -29,6 +29,39 @@ public class FacultyControllerMVCTest {
     private FacultyRepository facultyRepo;
 
     @Test
+    public void removeFacult() throws Exception {
+        var id = 1L;
+        var faculty = new Faculty();
+        faculty.setId(id);
+        faculty.setName("nameFaculty");
+        faculty.setColor("color");
+
+        doNothing().when(facultyRepo).deleteById(any(Long.class));
+        mockMvc.perform(MockMvcRequestBuilders
+                        .delete("/faculty/" + id))
+                .andExpect(status().isOk());
+    }
+
+
+    /*@Test
+    public void findFacultyById() throws Exception {
+
+        var faculty = new Faculty();
+        faculty.setId(1L);
+        faculty.setName("nameFaculty");
+        faculty.setColor("color");
+
+        when(facultyRepo.findById(any(Long.class))).thenReturn( Optional.of(faculty) );
+
+        mockMvc.perform(MockMvcRequestBuilders
+                        .get("/faculty/findfaculty/" + faculty.getId() )
+                        .accept(MediaType.APPLICATION_JSON))  // получить объект josn into
+                .andExpect(status().isOk())    // -> статус 200
+                .andExpect(jsonPath("$.id").value(faculty.getId()))
+                .andExpect(jsonPath("$.name").value(faculty.getName()));
+    }*/
+
+    @Test
     public void add() throws Exception {
         var faculty = createFaculty();
         faculty.setId(-1L);

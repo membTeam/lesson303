@@ -1,15 +1,21 @@
 package usePostgres.service;
 
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.beans.factory.annotation.Value;
+
 import java.nio.file.Files;
 
 import java.io.*;
 import java.nio.file.Path;
+import java.util.Collection;
+
 import static java.nio.file.StandardOpenOption.CREATE_NEW;
 
 import usePostgres.exception.ErrBadRequestException;
@@ -22,6 +28,8 @@ import usePostgres.repositories.StudentRepository;
 public class AvatarService {
     private AvatarRepository avatarRepo;
     private StudentRepository studentRepo;
+
+    private static int sizePage = 2;
 
     @Value("${path.to.avatars.folder}")
     private String avatarsDir;
@@ -97,6 +105,12 @@ public class AvatarService {
         return avatarRepo
                 .findById(id)
                 .orElseThrow(()-> {throw new ErrBadRequestException("Нет данных");});
+    }
+
+    public Page<Avatar> getPageAvatar(int numPage) {
+        Pageable pageable = PageRequest.of(numPage, sizePage);
+
+        return avatarRepo.findAll(pageable);
     }
 
 }

@@ -6,6 +6,8 @@ import usePostgres.repositories.RecDataStudent;
 import usePostgres.repositories.RecRequestStudent;
 import usePostgres.service.StudentService;
 
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 
 @RestController
@@ -18,10 +20,23 @@ public class StudentController {
         this.studentServ = studentServ;
     }
 
+
+    @GetMapping("get-last-five")
+    public Collection<Student> getLastFiveStudent() {
+        return studentServ.getLastFiveStudent(5);
+    }
+
+    @GetMapping("avg-age")
+    public Integer getAvgStudent() {
+        return studentServ.getAvgStudent();
+    }
+
     @GetMapping("amount-student")
     public Integer amountStudent() {
-        return null;
+        return studentServ.getAllAmountStudent();
     }
+
+
 
     @GetMapping("age/{start}/{end}")
     public List<Student> studentsAgeBetween(@PathVariable Integer start, @PathVariable Integer end) {

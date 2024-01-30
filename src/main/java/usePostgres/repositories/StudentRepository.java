@@ -3,6 +3,9 @@ package usePostgres.repositories;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.query.Procedure;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import java.util.List;
 
 import usePostgres.models.Avatar;
@@ -13,8 +16,9 @@ import usePostgres.models.RecStudentWithAvatar;
 
 public interface StudentRepository extends JpaRepository<Student, Long> {
 
-    @Query("")
-    List<Student> getLastFiveStudent();
+    @Query("FROM Student order by id desc limit :number")
+    List<Student> getLastFiveStudent(int number);
+    Page<Student> findAll(Pageable pageable);
 
     @Query("SELECT count(id) as amount FROM Student")
     int getAllAmountStudent();
@@ -22,6 +26,7 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
     @Query("select avg(s.age) from Student s")
     int getAvgStudent();
 
+    // --------------------------------
 
     @Query(value = "select st, av FROM Student st, Avatar av " +
             "where st.id = av.student.id and av.fileSize = 54563 ")

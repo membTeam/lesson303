@@ -6,6 +6,9 @@ import usePostgres.models.Faculty;
 
 public interface FacultyRepository extends JpaRepository<Faculty, Long> {
 
+
+
+
     @Query(value="SELECT exists(Select * from student where faculty_id = :id ) res",
             nativeQuery = true )
     boolean existDataForStudentId(Long id);
