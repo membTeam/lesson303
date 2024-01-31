@@ -29,13 +29,13 @@ public class StudentControllerTest {
     private int port;
 
     @Autowired
-    TestRestTemplate template;
+    private TestRestTemplate template;
 
     @Autowired
-    FacultyRepository facultyRepo;
+    private FacultyRepository facultyRepo;
 
     @Autowired
-    StudentRepository studentRepo;
+    private StudentRepository studentRepo;
 
     private String baseUrl;
 
@@ -94,10 +94,15 @@ public class StudentControllerTest {
 
     @Test
     public void read() {
-        var studentId = 101L;
-        var url = getUrl("read", studentId);
+        Long studentId = 101L;
+        //String url = getUrl("read", studentId);
+
+        var url = "http://localhost:" + port + "/student/"+101L;
+
+        // http://localhost:46459/student/read/101
 
         Student student = template.getForObject(url, Student.class);
+
         assertThat(student).isNotNull();
     }
 
@@ -108,10 +113,10 @@ public class StudentControllerTest {
         RecRequestStudent item =
                 new RecRequestStudent(-1L, 101L, 18, "Student forTest");
 
-        var resPost = template.postForObject(url, item, Student.class);
+        var studentFromPost = template.postForObject(url, item, Student.class);
 
-        assertThat(resPost).isNotNull();
-        assertThat(resPost.getName()).isEqualTo("Student forTest");
+        assertThat(studentFromPost).isNotNull();
+        assertThat(studentFromPost.getName()).isEqualTo("Student forTest");
     }
 
     @Test

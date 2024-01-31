@@ -16,12 +16,6 @@ public class MappedOneToOneTest {
     @Autowired
     private AvatarRepository avatarRepo;
 
-    @Test
-    public void findByFileSize() {
-        var item = avatarRepo.findAvatarForSize2(54563);
-
-        assertNotNull(item);
-    }
 
     @Test
     public void getAvatarData() {
@@ -48,16 +42,5 @@ public class MappedOneToOneTest {
 
     }
 
-    @Test
-    public void getStudentByFileSize() {
-
-        var item = studentRepo.getStudentByFileSize();
-
-        assertTrue(item.size()>0);
-
-        var student = (Student) item.get(0);
-        assertEquals("Tom Riddle", student.getName() );
-
-    }
 
 }

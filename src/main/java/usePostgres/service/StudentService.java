@@ -2,6 +2,8 @@ package usePostgres.service;
 
 import org.springframework.stereotype.Service;
 import usePostgres.exception.ErrBadRequestException;
+
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -42,6 +44,23 @@ public class StudentService {
             runException(strErr);
         }
     }
+
+
+    public Collection<Student> getLastFiveStudent(int numberLastItem) {
+        return studentRepo.getLastFiveStudent(numberLastItem);
+    }
+
+    public Integer getAvgStudent() {
+        return (int) studentRepo.getAvgStudent();
+    }
+
+    public Integer getAllAmountStudent() {
+        return studentRepo.getAllAmountStudent();
+    }
+
+
+
+
 
     public List<Student> studentsAgeBetween(Integer start, Integer end) {
         return studentRepo.findByAgeBetween(start, end);

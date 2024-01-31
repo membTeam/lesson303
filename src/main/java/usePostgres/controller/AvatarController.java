@@ -1,14 +1,17 @@
 package usePostgres.controller;
 
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import usePostgres.models.Avatar;
 import usePostgres.service.AvatarService;
 
 import java.io.IOException;
+import java.util.Collection;
 
 @RestController
 @RequestMapping("/avatar")
@@ -17,6 +20,11 @@ public class AvatarController {
     AvatarService avatarService;
     public AvatarController(AvatarService avatarService) {
         this.avatarService = avatarService;
+    }
+
+    @GetMapping("page/{number}")
+    private Page<Avatar> getPageAvatar(@PathVariable Integer number) {
+        return avatarService.getPageAvatar(number);
     }
 
 
