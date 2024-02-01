@@ -1,26 +1,42 @@
+CREATE TABLE IF NOT EXISTS owner_car(
+    id integer NOT NULL,
+    full_name character varying(50) NOT NULL COLLATE pg_catalog."default",
+    age integer NOT NULL default 16,
+    driving_license boolean not null default true,
+    car_id integer,
+    CONSTRAINT owner_car_pk PRIMARY KEY (id),
+    CONSTRAINT check_age CHECK (age >= 16),
+    CONSTRAINT unique_full_name UNIQUE (full_name)
+);
 
-CREATE TABLE IF NOT EXISTS public.student
-(
-    id bigint NOT NULL,
-    age integer NOT NULL default 20,
-    "name" character varying(100) NOT NULL COLLATE pg_catalog."default",
-    faculty_id bigint,
-    CONSTRAINT student_pkey PRIMARY KEY (id),
-	CONSTRAINT check_age CHECK (age >= 16),
-	CONSTRAINT unique_name_student UNIQUE ("name"),
-    CONSTRAINT student_faculty_foreingkey FOREIGN KEY (faculty_id)
-        REFERENCES public.faculty (id) MATCH SIMPLE     -- (простоеСовпадение)
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION
-)
+CREATE TABLE IF NOT EXISTS car(
+    id integer NOT NULL,
+    brand_car character varying(30) COLLATE pg_catalog."default" not null,
+    model character varying(20) COLLATE pg_catalog."default" not null,
+    cost integer not null,
+    CONSTRAINT car_pkey PRIMARY KEY (id),
+    CONSTRAINT unigque_brand_car UNIQUE (brand_car, model)
+);
 
--- *******************************
+ALTER TABLE owner_car ADD FOREIGN KEY (car_id) REFERENCES car;
 
-CREATE TABLE IF NOT EXISTS public.facultyTemp
-(
-    id bigint NOT NULL,
-    "name" character varying(100) COLLATE pg_catalog."default",
-	color character varying(50) COLLATE pg_catalog."default",
-    CONSTRAINT faculty_pkey PRIMARY KEY (id),
-	CONSTRAINT unique_name_color UNIQUE ("name", color)
-)
+/*
+select * from owner_car;
+id  full_name               age driving_license car_id
+------------------------------------------------------
+1	"Петр Иванов"	        18	    true	    1
+2	"Кирил Петров"	        25	    true	    2
+3	"Василий Кравцов"	    32	    true	    3
+4	"Валентина Иванова"	    40	    true	    1
+5	"Антонина Константинова" 52	    true	    2
+7	"Светлана Ивлева"	    40	    false
+8	"Валентин Константинов"	27	    false
+
+select * from car;
+id  brand_car    model      cost
+-----------------------------------
+1	"ВАЗ"	    "2108"	    500000
+2	"LADA"	    "Granta"	200000
+3	"Acura"	    "RDX 1"	    150000
+
+*/
