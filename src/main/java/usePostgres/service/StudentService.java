@@ -1,5 +1,7 @@
 package usePostgres.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import usePostgres.exception.ErrBadRequestException;
 
@@ -14,6 +16,8 @@ import static usePostgres.exception.RunErrBadRequestException.runException;
 
 @Service
 public class StudentService {
+
+    private Logger logger = LoggerFactory.getLogger(StudentService.class);
 
     private final StudentRepository studentRepo;
     private final FacultyRepository facultyRepository;
@@ -41,6 +45,7 @@ public class StudentService {
         }
 
         if (!strErr.isBlank()) {
+            logger.error(strErr);
             runException(strErr);
         }
     }
@@ -51,16 +56,14 @@ public class StudentService {
     }
 
     public Integer getAvgStudent() {
+        logger.info("get avgData");
         return (int) studentRepo.getAvgStudent();
     }
 
     public Integer getAllAmountStudent() {
+        logger.info("get allAmount");
         return studentRepo.getAllAmountStudent();
     }
-
-
-
-
 
     public List<Student> studentsAgeBetween(Integer start, Integer end) {
         return studentRepo.findByAgeBetween(start, end);

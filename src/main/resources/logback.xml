@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="warn" name="MyApp" packages="">
+    <property name="LOGS" value="./logs"/>
+    <Appender name="RollingFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOGS}/spring-boot-logger.log</file>
+
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <Pattern>%d %p [%t] %m%n</Pattern>
+        </encoder>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOGS}/archived/spring-boot-logger-%d{yyyy-MM-dd-HH}.log.gz</fileNamePattern>
+        </rollingPolicy>
+    </Appender>
+    <root level="error">
+        <appender-ref ref="RollingFile"/>
+    </root>
+
+    <logger name="usePostgres.service.StudentService" level="info"/>
+    <logger name="usePostgres.service.LoadData" level="info" />
+
+
+</Configuration>
