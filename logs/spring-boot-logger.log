@@ -48,3 +48,22 @@
 2024-02-09 20:21:07,900 INFO [http-nio-auto-1-exec-3] Чтение студентов на факультете name:Gryffindor
 2024-02-09 20:21:10,489 WARN [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
 2024-02-09 20:21:11,959 INFO [main] Загружены начальные данные
+2024-02-09 20:46:22,322 WARN [restartedMain] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-02-09 20:46:24,552 INFO [restartedMain] Загружены начальные данные
+2024-02-09 20:48:41,223 WARN [HikariPool-1 housekeeper] HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=1m19s459ms666µs283ns).
+2024-02-09 20:54:30,855 WARN [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-02-09 20:54:33,200 INFO [main] Загружены начальные данные
+2024-02-09 20:54:36,581 WARN [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-02-09 20:54:37,432 INFO [main] Загружены начальные данные
+2024-02-09 20:54:38,090 INFO [http-nio-auto-1-exec-2] Добавление студента id:1 name:Student forTest
+2024-02-09 20:54:38,119 INFO [http-nio-auto-1-exec-8] Удаление id:1 name:Student forTest
+2024-02-09 20:54:38,145 INFO [http-nio-auto-1-exec-9] Добавление студента id:1 name:Student forTest
+2024-02-09 20:54:38,164 INFO [http-nio-auto-1-exec-9] Обновление id:1 name:Student update
+2024-02-09 20:54:38,193 INFO [http-nio-auto-1-exec-10] Чтение студентов на факультете facultyId:101
+2024-02-09 20:54:38,313 INFO [http-nio-auto-1-exec-5] Запрос на средний возраст
+2024-02-09 20:54:38,353 INFO [http-nio-auto-1-exec-6] Добавление студента id:2 name:Student forTest
+2024-02-09 20:54:38,392 INFO [http-nio-auto-1-exec-6] Чтение студентов на факультете name:Gryffindor
+2024-02-09 20:54:40,582 WARN [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-02-09 20:54:41,799 INFO [main] Загружены начальные данные
+2024-02-09 20:57:53,995 WARN [restartedMain] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-02-09 20:57:55,892 INFO [restartedMain] Загружены начальные данные
