@@ -49,6 +49,14 @@ public class AvatarService {
         return filePath.substring((lastIndex));
     }
 
+    private Avatar getAvatar(Long id) {
+        logger.info("from getAvatar id:" + id);
+
+        return avatarRepo
+                .findById(id)
+                .orElseThrow(()-> {throw new ErrBadRequestException("Нет данных");});
+    }
+
     public void add(Long student_id, MultipartFile avatarFile) throws IOException {
         var student = studentRepo.getReferenceById(student_id);
 
@@ -112,13 +120,7 @@ public class AvatarService {
         return new RecResponseData(avatar.getData(), headers);
     }
 
-    private Avatar getAvatar(Long id) {
-        logger.info("from getAvatar id:" + id);
 
-        return avatarRepo
-                .findById(id)
-                .orElseThrow(()-> {throw new ErrBadRequestException("Нет данных");});
-    }
 
     public Page<Avatar> getPageAvatar(int numPage) {
         Pageable pageable = PageRequest.of(numPage, sizePage);

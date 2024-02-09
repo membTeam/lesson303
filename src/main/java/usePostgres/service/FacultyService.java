@@ -87,9 +87,9 @@ public class FacultyService {
             runException("Отклонение операции. Запись используется");
         }
 
-        logger.info(String.format("Удаление факультета id:%d name:%s", result.getId(), result.getName()));
-
         facultyRepo.deleteById(result.getId());
+
+        logger.info(String.format("Удаление факультета id:%d name:%s", result.getId(), result.getName()));
 
         return result;
     }
