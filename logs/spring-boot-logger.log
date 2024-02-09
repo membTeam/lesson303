@@ -1,116 +1,50 @@
-2024-02-09 18:04:40,882 WARN [restartedMain] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2024-02-09 18:04:42,946 INFO [restartedMain] Загружены начальные данные
-2024-02-09 18:07:26,981 ERROR [http-nio-8080-exec-4] Возраст д/быть больше 15 и меньше 25 Нет данных по факультету
-2024-02-09 18:07:26,985 WARN [http-nio-8080-exec-4] Resolved [usePostgres.exception.ErrBadRequestException: Возраст д/быть больше 15 и меньше 25 Нет данных по факультету]
-2024-02-09 18:08:49,548 WARN [restartedMain] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2024-02-09 18:08:51,488 INFO [restartedMain] Загружены начальные данные
-2024-02-09 18:09:14,963 WARN [http-nio-8080-exec-4] Resolved [usePostgres.exception.ErrBadRequestException: Возраст д/быть больше 15 и меньше 25]
-2024-02-09 18:10:08,569 WARN [restartedMain] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2024-02-09 18:10:10,663 INFO [restartedMain] Загружены начальные данные
-2024-02-09 18:10:40,823 ERROR [http-nio-8080-exec-5] ERROR: insert or update on table "student" violates foreign key constraint "fk6geq7tnjed7u4hvgv1ac6lyh"
-  Подробности: Key (faculty_id)=(10) is not present in table "faculty".
-2024-02-09 18:10:40,840 ERROR [http-nio-8080-exec-5] Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed: org.springframework.dao.DataIntegrityViolationException: could not execute statement [ERROR: insert or update on table "student" violates foreign key constraint "fk6geq7tnjed7u4hvgv1ac6lyh"
-  Подробности: Key (faculty_id)=(10) is not present in table "faculty".] [insert into student (age,faculty_id,name,id) values (?,?,?,?)]; SQL [insert into student (age,faculty_id,name,id) values (?,?,?,?)]; constraint [fk6geq7tnjed7u4hvgv1ac6lyh]] with root cause
-org.postgresql.util.PSQLException: ERROR: insert or update on table "student" violates foreign key constraint "fk6geq7tnjed7u4hvgv1ac6lyh"
-  Подробности: Key (faculty_id)=(10) is not present in table "faculty".
-	at org.postgresql.core.v3.QueryExecutorImpl.receiveErrorResponse(QueryExecutorImpl.java:2713)
-	at org.postgresql.core.v3.QueryExecutorImpl.processResults(QueryExecutorImpl.java:2401)
-	at org.postgresql.core.v3.QueryExecutorImpl.execute(QueryExecutorImpl.java:368)
-	at org.postgresql.jdbc.PgStatement.executeInternal(PgStatement.java:498)
-	at org.postgresql.jdbc.PgStatement.execute(PgStatement.java:415)
-	at org.postgresql.jdbc.PgPreparedStatement.executeWithFlags(PgPreparedStatement.java:190)
-	at org.postgresql.jdbc.PgPreparedStatement.executeUpdate(PgPreparedStatement.java:152)
-	at com.zaxxer.hikari.pool.ProxyPreparedStatement.executeUpdate(ProxyPreparedStatement.java:61)
-	at com.zaxxer.hikari.pool.HikariProxyPreparedStatement.executeUpdate(HikariProxyPreparedStatement.java)
-	at org.hibernate.engine.jdbc.internal.ResultSetReturnImpl.executeUpdate(ResultSetReturnImpl.java:194)
-	at org.hibernate.engine.jdbc.mutation.internal.AbstractMutationExecutor.performNonBatchedMutation(AbstractMutationExecutor.java:107)
-	at org.hibernate.engine.jdbc.mutation.internal.MutationExecutorSingleNonBatched.performNonBatchedOperations(MutationExecutorSingleNonBatched.java:40)
-	at org.hibernate.engine.jdbc.mutation.internal.AbstractMutationExecutor.execute(AbstractMutationExecutor.java:52)
-	at org.hibernate.persister.entity.mutation.InsertCoordinator.doStaticInserts(InsertCoordinator.java:175)
-	at org.hibernate.persister.entity.mutation.InsertCoordinator.coordinateInsert(InsertCoordinator.java:113)
-	at org.hibernate.persister.entity.AbstractEntityPersister.insert(AbstractEntityPersister.java:2873)
-	at org.hibernate.action.internal.EntityInsertAction.execute(EntityInsertAction.java:104)
-	at org.hibernate.engine.spi.ActionQueue.executeActions(ActionQueue.java:632)
-	at org.hibernate.engine.spi.ActionQueue.executeActions(ActionQueue.java:499)
-	at org.hibernate.event.internal.AbstractFlushingEventListener.performExecutions(AbstractFlushingEventListener.java:363)
-	at org.hibernate.event.internal.DefaultFlushEventListener.onFlush(DefaultFlushEventListener.java:41)
-	at org.hibernate.event.service.internal.EventListenerGroupImpl.fireEventOnEachListener(EventListenerGroupImpl.java:127)
-	at org.hibernate.internal.SessionImpl.doFlush(SessionImpl.java:1423)
-	at org.hibernate.internal.SessionImpl.managedFlush(SessionImpl.java:504)
-	at org.hibernate.internal.SessionImpl.flushBeforeTransactionCompletion(SessionImpl.java:2339)
-	at org.hibernate.internal.SessionImpl.beforeTransactionCompletion(SessionImpl.java:1996)
-	at org.hibernate.engine.jdbc.internal.JdbcCoordinatorImpl.beforeTransactionCompletion(JdbcCoordinatorImpl.java:439)
-	at org.hibernate.resource.transaction.backend.jdbc.internal.JdbcResourceLocalTransactionCoordinatorImpl.beforeCompletionCallback(JdbcResourceLocalTransactionCoordinatorImpl.java:169)
-	at org.hibernate.resource.transaction.backend.jdbc.internal.JdbcResourceLocalTransactionCoordinatorImpl$TransactionDriverControlImpl.commit(JdbcResourceLocalTransactionCoordinatorImpl.java:267)
-	at org.hibernate.engine.transaction.internal.TransactionImpl.commit(TransactionImpl.java:101)
-	at org.springframework.orm.jpa.JpaTransactionManager.doCommit(JpaTransactionManager.java:561)
-	at org.springframework.transaction.support.AbstractPlatformTransactionManager.processCommit(AbstractPlatformTransactionManager.java:794)
-	at org.springframework.transaction.support.AbstractPlatformTransactionManager.commit(AbstractPlatformTransactionManager.java:757)
-	at org.springframework.transaction.interceptor.TransactionAspectSupport.commitTransactionAfterReturning(TransactionAspectSupport.java:669)
-	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:419)
-	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:119)
-	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
-	at org.springframework.dao.support.PersistenceExceptionTranslationInterceptor.invoke(PersistenceExceptionTranslationInterceptor.java:137)
-	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
-	at org.springframework.data.repository.core.support.SurroundingTransactionDetectorMethodInterceptor.invoke(SurroundingTransactionDetectorMethodInterceptor.java:57)
-	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
-	at org.springframework.data.jpa.repository.support.CrudMethodMetadataPostProcessor$CrudMethodMetadataPopulatingMethodInterceptor.invoke(CrudMethodMetadataPostProcessor.java:164)
-	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
-	at org.springframework.aop.interceptor.ExposeInvocationInterceptor.invoke(ExposeInvocationInterceptor.java:97)
-	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
-	at org.springframework.aop.framework.JdkDynamicAopProxy.invoke(JdkDynamicAopProxy.java:249)
-	at jdk.proxy4/jdk.proxy4.$Proxy135.save(Unknown Source)
-	at usePostgres.service.StudentService.add(StudentService.java:104)
-	at usePostgres.controller.StudentController.add(StudentController.java:61)
-	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
-	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
-	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
-	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:262)
-	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:190)
-	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:118)
-	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:917)
-	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:829)
-	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
-	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1089)
-	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:979)
-	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014)
-	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:914)
-	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:590)
-	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885)
-	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:205)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149)
-	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149)
-	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149)
-	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149)
-	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149)
-	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167)
-	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90)
-	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:482)
-	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115)
-	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93)
-	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74)
-	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:340)
-	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:391)
-	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
-	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:896)
-	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1744)
-	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
-	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191)
-	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
-	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
-	at java.base/java.lang.Thread.run(Thread.java:840)
-2024-02-09 18:14:43,727 WARN [restartedMain] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2024-02-09 18:14:45,764 INFO [restartedMain] Загружены начальные данные
+2024-02-09 20:00:17,673 WARN [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-02-09 20:00:19,546 INFO [main] Загружены начальные данные
+2024-02-09 20:00:48,338 WARN [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-02-09 20:00:50,316 INFO [main] Загружены начальные данные
+2024-02-09 20:00:51,705 INFO [http-nio-auto-1-exec-6] Добавление студента id:1 name:Student forTest
+2024-02-09 20:00:51,755 INFO [http-nio-auto-1-exec-6] Удаление id:1 name:Student forTest
+2024-02-09 20:00:51,782 INFO [http-nio-auto-1-exec-7] Добавление студента id:1 name:Student forTest
+2024-02-09 20:00:51,797 INFO [http-nio-auto-1-exec-7] Обновление id:1 name:Student update
+2024-02-09 20:00:51,824 INFO [http-nio-auto-1-exec-8] Чтение студентов на факультете facultyId:101
+2024-02-09 20:00:52,004 INFO [http-nio-auto-1-exec-1] Запрос на средний возраст
+2024-02-09 20:00:52,046 INFO [http-nio-auto-1-exec-2] Добавление студента id:2 name:Student forTest
+2024-02-09 20:00:52,082 INFO [http-nio-auto-1-exec-3] Чтение студентов на факультете name:Gryffindor
+2024-02-09 20:00:55,350 WARN [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-02-09 20:00:57,094 INFO [main] Загружены начальные данные
+2024-02-09 20:00:59,060 WARN [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-02-09 20:01:00,033 INFO [main] Загружены начальные данные
+2024-02-09 20:01:00,050 INFO [main] Чтение студентов на факультете facultyId:101
+2024-02-09 20:01:00,091 INFO [main] Удаление id:1 name:Name for testing
+2024-02-09 20:01:00,118 INFO [main] Обновление id:-1 name:Name for testing
+2024-02-09 20:01:00,128 INFO [main] Добавление студента id:1 name:Name for testing
+2024-02-09 20:01:00,156 INFO [main] Чтение студентов на факультете name:Gryffindor
+2024-02-09 20:01:00,169 INFO [main] Чтение данные студента по id1
+2024-02-09 20:01:00,184 INFO [main] Запрос на средний возраст
+2024-02-09 20:01:52,115 WARN [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-02-09 20:01:54,697 INFO [main] Загружены начальные данные
+2024-02-09 20:03:19,752 WARN [HikariPool-1 housekeeper] HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=1m1s571ms979µs540ns).
+2024-02-09 20:11:31,722 WARN [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-02-09 20:11:33,669 INFO [main] Загружены начальные данные
+2024-02-09 20:12:56,800 WARN [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-02-09 20:12:59,189 INFO [main] Загружены начальные данные
+2024-02-09 20:17:15,633 WARN [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-02-09 20:17:17,450 INFO [main] Загружены начальные данные
+2024-02-09 20:18:15,000 WARN [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-02-09 20:18:17,082 INFO [main] Загружены начальные данные
+2024-02-09 20:20:14,488 WARN [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-02-09 20:20:16,408 INFO [main] Загружены начальные данные
+2024-02-09 20:21:01,317 WARN [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-02-09 20:21:03,094 INFO [main] Загружены начальные данные
+2024-02-09 20:21:06,171 WARN [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-02-09 20:21:06,949 INFO [main] Загружены начальные данные
+2024-02-09 20:21:07,581 INFO [http-nio-auto-1-exec-7] Добавление студента id:1 name:Student forTest
+2024-02-09 20:21:07,613 INFO [http-nio-auto-1-exec-7] Удаление id:1 name:Student forTest
+2024-02-09 20:21:07,639 INFO [http-nio-auto-1-exec-8] Добавление студента id:1 name:Student forTest
+2024-02-09 20:21:07,666 INFO [http-nio-auto-1-exec-8] Обновление id:1 name:Student update
+2024-02-09 20:21:07,699 INFO [http-nio-auto-1-exec-9] Чтение студентов на факультете facultyId:101
+2024-02-09 20:21:07,819 INFO [http-nio-auto-1-exec-1] Запрос на средний возраст
+2024-02-09 20:21:07,862 INFO [http-nio-auto-1-exec-2] Добавление студента id:2 name:Student forTest
+2024-02-09 20:21:07,900 INFO [http-nio-auto-1-exec-3] Чтение студентов на факультете name:Gryffindor
+2024-02-09 20:21:10,489 WARN [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-02-09 20:21:11,959 INFO [main] Загружены начальные данные
