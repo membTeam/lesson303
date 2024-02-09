@@ -59,10 +59,10 @@
 			<version>1.7.0</version>
 		</dependency>
 
-		<dependency>
+		<!--<dependency>
 			<groupId>org.liquibase</groupId>
 			<artifactId>liquibase-core</artifactId>
-		</dependency>
+		</dependency>-->
 
 		<dependency>
 			<groupId>ch.qos.logback</groupId>
