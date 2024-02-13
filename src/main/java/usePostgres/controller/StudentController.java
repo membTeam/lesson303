@@ -1,5 +1,6 @@
 package usePostgres.controller;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import usePostgres.models.Student;
 import usePostgres.repositories.RecDataStudent;
@@ -7,6 +8,7 @@ import usePostgres.repositories.RecRequestStudent;
 import usePostgres.service.StudentService;
 
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
@@ -20,6 +22,16 @@ public class StudentController {
         this.studentServ = studentServ;
     }
 
+    @GetMapping("average-age-from-all")
+    public Integer getAvgStudentExt() {
+        return studentServ.getAvgStudentExt();
+    }
+
+
+    @GetMapping("all-sorted/{valueChar}")
+    ResponseEntity<List<Student>> findAllByFirstChar(@PathVariable String valueChar) {
+        return ResponseEntity.ok(studentServ.findAllByFirstChar(valueChar));
+    }
 
     @GetMapping("get-last-five")
     public Collection<Student> getLastFiveStudent() {

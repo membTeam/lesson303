@@ -7,6 +7,8 @@ import usePostgres.exception.ErrBadRequestException;
 import usePostgres.models.Faculty;
 import usePostgres.repositories.FacultyRepository;
 
+import java.util.Comparator;
+
 import static usePostgres.exception.RunErrBadRequestException.runException;
 
 @Service
@@ -92,5 +94,14 @@ public class FacultyService {
         logger.info(String.format("Удаление факультета id:%d name:%s", result.getId(), result.getName()));
 
         return result;
+    }
+
+    public String getLongNameFaculty() {
+        record RecFaculty(int length, String name){};
+
+        return facultyRepo.findAll().stream()
+                .map(item -> new RecFaculty(item.getName().length(), item.getName()) )
+                .sorted(Comparator.comparing(RecFaculty::length, Comparator.reverseOrder()))
+                .toList().get(0).name();
     }
 }

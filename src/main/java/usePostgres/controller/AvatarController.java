@@ -21,8 +21,13 @@ public class AvatarController {
         this.avatarService = avatarService;
     }
 
+    @GetMapping("calculate-reduce")
+    public ResponseEntity<Integer> calculateReduce() {
+        return ResponseEntity.ok(avatarService.calculateReduce());
+    }
+
     @GetMapping("page/{number}")
-    private Page<Avatar> getPageAvatar(@PathVariable Integer number) {
+    public Page<Avatar> getPageAvatar(@PathVariable Integer number) {
         return avatarService.getPageAvatar(number);
     }
 

@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import usePostgres.exception.ErrBadRequestException;
 
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -144,4 +145,23 @@ public class StudentService {
         return item;
     }
 
+    public List<Student> findAllByFirstChar(String valueChar) {
+
+        String charParam = valueChar.length() > 1 ? valueChar.charAt(0) + "" : valueChar;
+
+        var data = studentRepo.findAll();
+        return data.stream()
+                .filter(item -> item.getName().startsWith(charParam.toUpperCase()))
+                .sorted(Comparator.comparing(Student::getName))
+                .toList();
+    }
+
+    public Integer getAvgStudentExt() {
+        var data = studentRepo.findAll();
+
+        return  (int) data.stream()
+                .mapToInt(Student::getAge)
+                .average().orElseThrow();
+
+    }
 }
