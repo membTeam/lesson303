@@ -11,7 +11,6 @@ import usePostgres.models.Avatar;
 import usePostgres.service.AvatarService;
 
 import java.io.IOException;
-import java.util.Collection;
 
 @RestController
 @RequestMapping("/avatar")

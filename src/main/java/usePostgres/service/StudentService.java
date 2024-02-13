@@ -1,5 +1,7 @@
 package usePostgres.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import usePostgres.exception.ErrBadRequestException;
 
@@ -14,6 +16,8 @@ import static usePostgres.exception.RunErrBadRequestException.runException;
 
 @Service
 public class StudentService {
+
+    private Logger logger = LoggerFactory.getLogger(StudentService.class);
 
     private final StudentRepository studentRepo;
     private final FacultyRepository facultyRepository;
@@ -47,33 +51,34 @@ public class StudentService {
 
 
     public Collection<Student> getLastFiveStudent(int numberLastItem) {
+        logger.info("Выборка 5 последних студентов");
         return studentRepo.getLastFiveStudent(numberLastItem);
     }
 
     public Integer getAvgStudent() {
+        logger.info("get avgData");
         return (int) studentRepo.getAvgStudent();
     }
 
     public Integer getAllAmountStudent() {
+        logger.info("get allAmount");
         return studentRepo.getAllAmountStudent();
     }
 
-
-
-
-
     public List<Student> studentsAgeBetween(Integer start, Integer end) {
+        logger.info("Запрос на средний возраст");
         return studentRepo.findByAgeBetween(start, end);
     }
 
     public List<RecDataStudent> allStudentInFaculty(Long id) {
-
+        logger.info("Чтение студентов на факультете facultyId:" + id);
         return studentRepo.findStudentInFaculty(id)
                 .stream().map(obj-> new RecDataStudent(obj))
                 .collect(Collectors.toList());
     }
 
     public List<Student> allStudentInFaculty(String faculty) {
+        logger.info("Чтение студентов на факультете name:" + faculty);
         return studentRepo.findStudentInFaculty(faculty);
     }
 
@@ -99,10 +104,12 @@ public class StudentService {
         student.setName(item.name());
         student.setFaculty(faculty);
 
+        logger.info(String.format("Добавление студента id:%d name:%s", student.getId(), student.getName()));
         return studentRepo.save(student);
     }
 
     public Student read(Long id) {
+        logger.info("Чтение данные студента по id" + id);
         return studentRepo.findById(id)
                 .orElseThrow(()->{throw new ErrBadRequestException("Нет данных по id");});
     }
@@ -121,12 +128,16 @@ public class StudentService {
             student.setFaculty(faculty);
         }
 
+        logger.info(String.format("Обновление id:%d name:%s", student.getId(), student.getName()));
+
         return studentRepo.save(student);
     }
 
     public Student delete(Long id) {
         var item = studentRepo.findById(id)
                 .orElseThrow(()-> {throw new ErrBadRequestException("Нет данных по id");});
+
+        logger.info(String.format("Удаление id:%d name:%s", item.getId(), item.getName()));
 
         studentRepo.deleteById(id);
 

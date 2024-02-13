@@ -1,6 +1,8 @@
 package usePostgres.service;
 
 import jakarta.servlet.http.HttpServletResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.PageRequest;
@@ -26,6 +28,9 @@ import usePostgres.repositories.StudentRepository;
 
 @Service
 public class AvatarService {
+
+    Logger logger = LoggerFactory.getLogger(AvatarService.class);
+
     private AvatarRepository avatarRepo;
     private StudentRepository studentRepo;
 
@@ -42,6 +47,14 @@ public class AvatarService {
     private static String getExtensions(String filePath) {
         var lastIndex = filePath.lastIndexOf(".");
         return filePath.substring((lastIndex));
+    }
+
+    private Avatar getAvatar(Long id) {
+        logger.info("from getAvatar id:" + id);
+
+        return avatarRepo
+                .findById(id)
+                .orElseThrow(()-> {throw new ErrBadRequestException("Нет данных");});
     }
 
     public void add(Long student_id, MultipartFile avatarFile) throws IOException {
@@ -71,6 +84,8 @@ public class AvatarService {
         avatar.setMediaType(avatarFile.getContentType());
         avatar.setData(avatarFile.getBytes());
 
+        logger.info(String.format("Добавление аватара " + avatar.getFilePath()));
+
         avatarRepo.save(avatar);
     }
 
@@ -86,6 +101,8 @@ public class AvatarService {
             response.setContentType(avatar.getMediaType());
             response.setContentLength((int) avatar.getFileSize());
             is.transferTo(os);
+
+            logger.info(String.format("findAvatar ", avatar.getFilePath()));
         } catch (IOException ex) {
             throw new ErrBadRequestException("Нет данных");
         }
@@ -98,17 +115,16 @@ public class AvatarService {
         headers.setContentType(MediaType.parseMediaType(avatar.getMediaType()));
         headers.setContentLength(avatar.getData().length);
 
+        logger.info("from downLoadAvatar id:" + id);
+
         return new RecResponseData(avatar.getData(), headers);
     }
 
-    private Avatar getAvatar(Long id) {
-        return avatarRepo
-                .findById(id)
-                .orElseThrow(()-> {throw new ErrBadRequestException("Нет данных");});
-    }
+
 
     public Page<Avatar> getPageAvatar(int numPage) {
         Pageable pageable = PageRequest.of(numPage, sizePage);
+        logger.info("from getPageAvatar numPage:" + numPage);
 
         return avatarRepo.findAll(pageable);
     }

@@ -1,5 +1,7 @@
 package usePostgres.service;
 
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 import org.springframework.stereotype.Service;
 import usePostgres.exception.ErrBadRequestException;
 import usePostgres.models.Faculty;
@@ -10,6 +12,8 @@ import static usePostgres.exception.RunErrBadRequestException.runException;
 @Service
 public class FacultyService {
     private FacultyRepository facultyRepo;
+
+    Logger logger = LoggerFactory.getLogger(FacultyService.class);
 
     public FacultyService(FacultyRepository facultyRepository) {
         this.facultyRepo = facultyRepository;
@@ -44,6 +48,8 @@ public class FacultyService {
         var getMaxId = item.getId()>=0 ? facultyRepo.getMaxID() : facultyRepo.getMaxIdForTesting();
         item.setId(++getMaxId);
 
+        logger.info( String.format("Добавление факультета id:%d name:%s", item.getId(), item.getName()));
+
         return facultyRepo.save(item);
     }
 
@@ -52,7 +58,10 @@ public class FacultyService {
             runException("Нет данных по id " + id);
         }
 
-        return facultyRepo.findById(id).orElseThrow();
+        var faculty = facultyRepo.findById(id).orElseThrow();
+        logger.info(String.format("Чтение данных id:%d name:%s", faculty.getId(), faculty.getName()));
+
+        return faculty;
     }
 
     public Faculty update(Faculty item) {
@@ -62,6 +71,8 @@ public class FacultyService {
         }
 
         checkData(item);
+
+        logger.info(String.format("Изменение факультета id:%d name:%s", item.getId(), item.getName() ));
         return facultyRepo.save(item);
     }
 
@@ -77,6 +88,9 @@ public class FacultyService {
         }
 
         facultyRepo.deleteById(result.getId());
+
+        logger.info(String.format("Удаление факультета id:%d name:%s", result.getId(), result.getName()));
+
         return result;
     }
 }
