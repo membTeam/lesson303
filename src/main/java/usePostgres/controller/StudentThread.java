@@ -28,9 +28,9 @@ public class StudentThread implements Runnable {
 
     @Override
     public void run() {
-        /*try {
+        try {
             sem.acquire();
-            studentRepo.findAll()
+            studentRepo.allStudentForRecDataStudent()
                     .stream()
                     .skip(startIndex)
                     .limit(num) .parallel().forEach(System.out::println);
@@ -39,7 +39,7 @@ public class StudentThread implements Runnable {
             throw new ErrBadRequestException(e.getMessage());
         } finally {
             sem.release();
-        }*/
+        }
 
     }
 }

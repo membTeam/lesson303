@@ -167,14 +167,25 @@ public class StudentService {
 
     }
 
-    /*public void printParallel() {
+    private void printSynchronized() {
+        studentRepo.allStudentForRecDataStudent().stream().skip(2).limit(2).parallel().forEach(System.out::println);
+        studentRepo.allStudentForRecDataStudent().stream().skip(4).limit(2).parallel().forEach(System.out::println);
+    }
 
-        studentRepo.findAll().stream().limit(2).forEach(System.out::println);
+    public void printSynchronizedContr() {
+        studentRepo.allStudentForRecDataStudent().stream().limit(2).forEach(System.out::println);
 
-        *//*Semaphore sem = new Semaphore(1);
+        printSynchronized();
+    }
+
+    public void printParallel() {
+
+        studentRepo.allStudentForRecDataStudent().stream().limit(2).forEach(System.out::println);
+
+        Semaphore sem = new Semaphore(1);
 
         new Thread(new StudentThread(studentRepo, sem, 2, 2)).start();
-        new Thread(new StudentThread(studentRepo, sem, 4, 2)).start();*//*
+        new Thread(new StudentThread(studentRepo, sem, 4, 2)).start();
 
-    }*/
+    }
 }

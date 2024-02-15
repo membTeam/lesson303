@@ -2608,3 +2608,33 @@ Caused by: org.hibernate.query.SyntaxException: At 1:107 and token '.', mismatch
 	at org.hibernate.internal.AbstractSharedSessionContract.interpretHql(AbstractSharedSessionContract.java:769)
 	at org.hibernate.internal.AbstractSharedSessionContract.createQuery(AbstractSharedSessionContract.java:819)
 	... 148 common frames omitted
+2024-02-15 17:03:32,108 WARN [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-02-15 17:03:33,957 INFO [main] Загружены начальные данные
+2024-02-15 17:04:40,343 WARN [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-02-15 17:04:42,144 INFO [main] Загружены начальные данные
+2024-02-15 17:07:15,704 WARN [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-02-15 17:07:17,588 INFO [main] Загружены начальные данные
+2024-02-15 17:07:56,568 WARN [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-02-15 17:07:58,808 INFO [main] Загружены начальные данные
+2024-02-15 17:08:41,142 WARN [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-02-15 17:08:42,844 INFO [main] Загружены начальные данные
+2024-02-15 17:13:44,836 WARN [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-02-15 17:13:46,568 INFO [main] Загружены начальные данные
+2024-02-15 17:15:17,355 WARN [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-02-15 17:15:19,167 INFO [main] Загружены начальные данные
+2024-02-15 17:16:25,678 WARN [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-02-15 17:16:27,835 INFO [main] Загружены начальные данные
+2024-02-15 17:18:18,099 WARN [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-02-15 17:18:19,890 INFO [main] Загружены начальные данные
+2024-02-15 17:19:42,623 WARN [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-02-15 17:19:44,657 INFO [main] Загружены начальные данные
+2024-02-15 17:20:29,080 WARN [HikariPool-1 housekeeper] HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=51s726ms345µs479ns).
+2024-02-15 17:21:14,271 WARN [SpringApplicationShutdownHook] Timed-out waiting for close connection executor to shutdown
+2024-02-15 17:22:57,223 WARN [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-02-15 17:22:59,068 INFO [main] Загружены начальные данные
+2024-02-15 17:25:11,906 WARN [restartedMain] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-02-15 17:25:13,511 INFO [restartedMain] Загружены начальные данные
+2024-02-15 17:26:13,312 WARN [restartedMain] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-02-15 17:26:15,210 INFO [restartedMain] Загружены начальные данные
+2024-02-15 17:59:00,223 WARN [restartedMain] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-02-15 17:59:01,987 INFO [restartedMain] Загружены начальные данные
