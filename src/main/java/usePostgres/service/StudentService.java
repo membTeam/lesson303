@@ -3,11 +3,13 @@ package usePostgres.service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import usePostgres.controller.StudentThread;
 import usePostgres.exception.ErrBadRequestException;
 
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
+import java.util.concurrent.Semaphore;
 import java.util.stream.Collectors;
 
 import usePostgres.models.Student;
@@ -164,4 +166,15 @@ public class StudentService {
                 .average().orElseThrow();
 
     }
+
+    /*public void printParallel() {
+
+        studentRepo.findAll().stream().limit(2).forEach(System.out::println);
+
+        *//*Semaphore sem = new Semaphore(1);
+
+        new Thread(new StudentThread(studentRepo, sem, 2, 2)).start();
+        new Thread(new StudentThread(studentRepo, sem, 4, 2)).start();*//*
+
+    }*/
 }

@@ -22,6 +22,12 @@ public class StudentController {
         this.studentServ = studentServ;
     }
 
+    /*@GetMapping("print-parallel")
+    public void printParallel() {
+        studentServ.printParallel();
+    }*/
+
+
     @GetMapping("average-age-from-all")
     public Integer getAvgStudentExt() {
         return studentServ.getAvgStudentExt();
