@@ -180,9 +180,16 @@ public class StudentService {
 
     public void printParallel() {
 
-        studentRepo.allStudentForRecDataStudent().stream().limit(2).forEach(System.out::println);
-
         Semaphore sem = new Semaphore(1);
+
+        try {
+            sem.acquire();
+            studentRepo.allStudentForRecDataStudent().stream().limit(2).forEach(System.out::println);
+        } catch (InterruptedException ex) {
+            throw new ErrBadRequestException(ex.getMessage());
+        } finally {
+            sem.release();
+        }
 
         new Thread(new StudentThread(studentRepo, sem, 2, 2)).start();
         new Thread(new StudentThread(studentRepo, sem, 4, 2)).start();
