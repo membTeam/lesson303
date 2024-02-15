@@ -20,11 +20,11 @@ public class MappedOneToOneTest {
     @Test
     public void getAvatarData() {
         // использование внутренних связей -> join
-        var item = studentRepo.getAvatarData(48338);
+        var item = studentRepo.getAvatarData(54563);
 
         assertTrue(item.size()>0);
 
-        assertEquals("avatars/Percy Weasley.png", item.get(0).getFilePath());
+        assertEquals("avatars/Tom Riddle.png", item.get(0).getFilePath());
     }
 
     @Test

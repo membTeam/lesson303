@@ -7,6 +7,8 @@ import org.springframework.data.jpa.repository.query.Procedure;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Stream;
 
 import usePostgres.models.Avatar;
 import usePostgres.models.DataStudentImpl;
@@ -15,6 +17,14 @@ import usePostgres.models.RecStudentWithAvatar;
 
 
 public interface StudentRepository extends JpaRepository<Student, Long> {
+
+    @Query("FROM Student st where upper(substring(st.name,1,1)) = :charName order by st.name")
+    Optional<List<Student>> findAllByFirstChar(String charName);
+
+
+    @Query("FROM Student st order by st.name")
+    List<Student> findAllByFirstCharExt();
+
 
     @Query("FROM Student order by id desc limit :number")
     List<Student> getLastFiveStudent(int number);

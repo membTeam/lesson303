@@ -1,6 +1,7 @@
 package usePostgres.controller;
 
 import org.springframework.boot.logging.java.JavaLoggingSystem;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import usePostgres.models.Faculty;
 import usePostgres.repositories.FacultyRepository;
@@ -16,6 +17,10 @@ public class FacultyController {
         this.facultyService = facultyService;
     }
 
+    @GetMapping("long-name-faculty")
+    public ResponseEntity<String> getLongNameFaculty() {
+        return ResponseEntity.ok(facultyService.getLongNameFaculty());
+    }
     @PostMapping("add")
     public Faculty add(@RequestBody Faculty faculty) {
         return facultyService.add(faculty);
