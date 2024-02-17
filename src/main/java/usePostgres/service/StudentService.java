@@ -179,6 +179,21 @@ public class StudentService {
     }
 
     public void printParallel() {
+        var threadRepository = new  StudentThreadRepository(studentRepo);
+
+        studentRepo.allStudentForRecDataStudent()
+                .stream().limit(2)
+                .forEach(System.out::println);
+
+        var studentThread1 = new StudentThreadParallel(threadRepository, 2, 2);
+        var studentThread2 = new StudentThreadParallel(threadRepository, 4, 2);
+
+        new Thread(studentThread1).start();
+        new Thread(studentThread2).start();
+    }
+
+
+    /*public void printParallel() {
 
         Semaphore sem = new Semaphore(1);
 
@@ -194,5 +209,5 @@ public class StudentService {
         new Thread(new StudentThread(studentRepo, sem, 2, 2)).start();
         new Thread(new StudentThread(studentRepo, sem, 4, 2)).start();
 
-    }
+    }*/
 }
