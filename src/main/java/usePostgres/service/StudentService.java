@@ -3,11 +3,13 @@ package usePostgres.service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import usePostgres.controller.StudentThread;
 import usePostgres.exception.ErrBadRequestException;
 
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
+import java.util.concurrent.Semaphore;
 import java.util.stream.Collectors;
 
 import usePostgres.models.Student;
@@ -164,4 +166,48 @@ public class StudentService {
                 .average().orElseThrow();
 
     }
+
+    private void printSynchronized() {
+        studentRepo.allStudentForRecDataStudent().stream().skip(2).limit(2).parallel().forEach(System.out::println);
+        studentRepo.allStudentForRecDataStudent().stream().skip(4).limit(2).parallel().forEach(System.out::println);
+    }
+
+    public void printSynchronizedContr() {
+        studentRepo.allStudentForRecDataStudent().stream().limit(2).forEach(System.out::println);
+
+        printSynchronized();
+    }
+
+    public void printParallel() {
+        var threadRepository = new  StudentThreadRepository(studentRepo);
+
+        studentRepo.allStudentForRecDataStudent()
+                .stream().limit(2)
+                .forEach(System.out::println);
+
+        var studentThread1 = new StudentThreadParallel(threadRepository, 2, 2);
+        var studentThread2 = new StudentThreadParallel(threadRepository, 4, 2);
+
+        new Thread(studentThread1).start();
+        new Thread(studentThread2).start();
+    }
+
+
+    /*public void printParallel() {
+
+        Semaphore sem = new Semaphore(1);
+
+        try {
+            sem.acquire();
+            studentRepo.allStudentForRecDataStudent().stream().limit(2).forEach(System.out::println);
+        } catch (InterruptedException ex) {
+            throw new ErrBadRequestException(ex.getMessage());
+        } finally {
+            sem.release();
+        }
+
+        new Thread(new StudentThread(studentRepo, sem, 2, 2)).start();
+        new Thread(new StudentThread(studentRepo, sem, 4, 2)).start();
+
+    }*/
 }

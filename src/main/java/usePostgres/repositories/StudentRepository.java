@@ -8,7 +8,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Stream;
 
 import usePostgres.models.Avatar;
 import usePostgres.models.DataStudentImpl;
@@ -17,6 +16,10 @@ import usePostgres.models.RecStudentWithAvatar;
 
 
 public interface StudentRepository extends JpaRepository<Student, Long> {
+
+    // id, String facultyName, String name, int age
+    @Query("Select new usePostgres.repositories.RecDataStudent(s.id, f.name, s.name, s.age ) From Student s join s.faculty f")
+    List<RecDataStudent> allStudentForRecDataStudent();
 
     @Query("FROM Student st where upper(substring(st.name,1,1)) = :charName order by st.name")
     Optional<List<Student>> findAllByFirstChar(String charName);
